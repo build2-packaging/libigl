@@ -1,0 +1,1 @@
+../../upstream/include/igl/triangles_from_strip.h

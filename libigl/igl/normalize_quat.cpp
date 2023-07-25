@@ -1,0 +1,1 @@
+../../upstream/include/igl/normalize_quat.cpp

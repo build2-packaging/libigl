@@ -1,0 +1,9 @@
+import libs = Eigen%lib{Eigen}
+
+lib{igl}: {hxx ixx}{*} ixx{raytri.c.} $libs
+{
+  cxx.export.poptions = "-I$src_root"
+  cxx.export.libs = $libs
+}
+
+{hxx ixx}{*}: install = include/igl/

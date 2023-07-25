@@ -1,0 +1,6 @@
+$out_root/
+{
+  include igl/
+}
+
+export $out_root/igl/$import.target

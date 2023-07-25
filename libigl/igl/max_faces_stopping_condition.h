@@ -1,0 +1,1 @@
+../../upstream/include/igl/max_faces_stopping_condition.h

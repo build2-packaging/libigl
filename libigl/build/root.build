@@ -1,0 +1,16 @@
+# Uncomment to suppress warnings coming from external libraries.
+#
+#cxx.internal.scope = current
+
+cxx.std = latest
+
+using cxx
+
+hxx{*}: extension = h
+ixx{*}: extension = cpp
+txx{*}: extension = tpp
+cxx{*}: extension = cpp
+
+hxx{*}: cxx.importable = false
+
+test.target = $cxx.target

@@ -1,0 +1,1 @@
+../../../upstream/tests/include/igl/barycentric_interpolation.cpp

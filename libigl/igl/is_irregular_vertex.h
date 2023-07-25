@@ -1,0 +1,1 @@
+../../upstream/include/igl/is_irregular_vertex.h

@@ -1,0 +1,1 @@
+../../upstream/include/igl/covariance_scatter_matrix.h

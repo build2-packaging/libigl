@@ -1,0 +1,1 @@
+../../upstream/include/igl/vector_area_matrix.h

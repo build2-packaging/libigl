@@ -1,0 +1,1 @@
+../../upstream/include/igl/curved_hessian_energy.h
