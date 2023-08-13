@@ -1,0 +1,2 @@
+import igl = libigl-core%lib{igl-core}
+exe{main}: {hxx cxx}{**} $igl

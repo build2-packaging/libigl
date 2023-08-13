@@ -1,1 +1,0 @@
-../../../upstream/tests/include/igl/avg_edge_length.cpp

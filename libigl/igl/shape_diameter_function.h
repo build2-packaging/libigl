@@ -1,1 +1,0 @@
-../../upstream/include/igl/shape_diameter_function.h

@@ -1,0 +1,10 @@
+project = libigl-core-tests
+
+using version
+using config
+using test
+using dist
+
+# Tests will not be installed.
+#
+# using install

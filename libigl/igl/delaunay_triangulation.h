@@ -1,1 +1,0 @@
-../../upstream/include/igl/delaunay_triangulation.h

@@ -1,1 +1,0 @@
-../../upstream/include/igl/sort_vectors_ccw.h

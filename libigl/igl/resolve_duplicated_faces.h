@@ -1,1 +1,0 @@
-../../upstream/include/igl/resolve_duplicated_faces.h

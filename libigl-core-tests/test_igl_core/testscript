@@ -1,0 +1,12 @@
+$* >- 2>- \
+  &qslim-cylinder-ug.ply \
+  &qslim-cylinder-vf.ply \
+  &quad_cube.ply \
+  &readMESH_mesh-version-formatted-2.mesh \
+  &readMESH_no-triangles-line.mesh \
+  &readMESH_single-tet.mesh \
+  &test_binary_sphere.msh \
+  &test_binary_sphere_2.msh \
+  &writePLY_test_bunny.ply \
+  &writePLY_test_bunny_float.ply \
+  == 0

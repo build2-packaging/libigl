@@ -1,1 +1,0 @@
-../../../upstream/tests/include/igl/is_irregular_vertex.cpp

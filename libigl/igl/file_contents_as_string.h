@@ -1,1 +1,0 @@
-../../upstream/include/igl/file_contents_as_string.h

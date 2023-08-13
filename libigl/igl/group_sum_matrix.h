@@ -1,1 +1,0 @@
-../../upstream/include/igl/group_sum_matrix.h

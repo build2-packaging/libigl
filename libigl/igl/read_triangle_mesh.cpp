@@ -1,1 +1,0 @@
-../../upstream/include/igl/read_triangle_mesh.cpp

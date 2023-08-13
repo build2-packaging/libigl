@@ -1,1 +1,0 @@
-../../../upstream/tests/include/igl/triangle_triangle_adjacency.cpp

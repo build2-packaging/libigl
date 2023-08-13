@@ -1,1 +1,0 @@
-../../upstream/include/igl/gaussian_curvature.cpp

@@ -1,1 +1,0 @@
-../../upstream/include/igl/quadric_binary_plus_operator.h

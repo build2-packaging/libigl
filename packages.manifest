@@ -1,4 +1,4 @@
 : 1
-location: libigl/
+location: libigl-core/
 :
-location: libigl-tests/
+location: libigl-core-tests/

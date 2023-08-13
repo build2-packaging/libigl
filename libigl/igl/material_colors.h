@@ -1,1 +1,0 @@
-../../upstream/include/igl/material_colors.h

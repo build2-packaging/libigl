@@ -1,1 +1,0 @@
-../../upstream/include/igl/facet_adjacency_matrix.h

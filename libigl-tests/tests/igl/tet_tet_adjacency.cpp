@@ -1,1 +1,0 @@
-../../../upstream/tests/include/igl/tet_tet_adjacency.cpp

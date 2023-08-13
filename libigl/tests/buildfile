@@ -1,2 +1,0 @@
-import igl = libigl%lib{igl}
-exe{main}: {hxx cxx}{**} $igl

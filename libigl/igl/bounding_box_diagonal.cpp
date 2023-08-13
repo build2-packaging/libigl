@@ -1,1 +1,0 @@
-../../upstream/include/igl/bounding_box_diagonal.cpp

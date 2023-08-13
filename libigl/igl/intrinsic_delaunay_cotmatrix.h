@@ -1,1 +1,0 @@
-../../upstream/include/igl/intrinsic_delaunay_cotmatrix.h

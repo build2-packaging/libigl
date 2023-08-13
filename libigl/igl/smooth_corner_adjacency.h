@@ -1,1 +1,0 @@
-../../upstream/include/igl/smooth_corner_adjacency.h

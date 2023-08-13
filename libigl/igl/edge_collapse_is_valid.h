@@ -1,1 +1,0 @@
-../../upstream/include/igl/edge_collapse_is_valid.h

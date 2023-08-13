@@ -1,1 +1,0 @@
-../../upstream/include/igl/mapping_energy_with_jacobians.cpp

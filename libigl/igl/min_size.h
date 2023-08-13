@@ -1,1 +1,0 @@
-../../upstream/include/igl/min_size.h

@@ -1,1 +1,0 @@
-../../upstream/include/igl/is_symmetric.h

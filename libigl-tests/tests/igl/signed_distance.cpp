@@ -1,1 +1,0 @@
-../../../upstream/tests/include/igl/signed_distance.cpp

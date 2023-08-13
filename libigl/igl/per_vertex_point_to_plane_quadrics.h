@@ -1,1 +1,0 @@
-../../upstream/include/igl/per_vertex_point_to_plane_quadrics.h

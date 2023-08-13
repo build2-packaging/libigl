@@ -1,1 +1,0 @@
-../../upstream/include/igl/stdin_to_temp.h

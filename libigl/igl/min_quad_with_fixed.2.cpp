@@ -1,1 +1,0 @@
-../../upstream/include/igl/min_quad_with_fixed.2.cpp

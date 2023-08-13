@@ -1,1 +1,0 @@
-../../upstream/include/igl/path_to_edges.h

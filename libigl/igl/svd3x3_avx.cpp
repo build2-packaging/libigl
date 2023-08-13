@@ -1,1 +1,0 @@
-../../upstream/include/igl/svd3x3_avx.cpp

@@ -1,1 +1,0 @@
-../../upstream/include/igl/is_vertex_manifold.h

@@ -1,1 +1,0 @@
-../../upstream/include/igl/collapse_small_triangles.h

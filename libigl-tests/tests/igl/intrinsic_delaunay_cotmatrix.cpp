@@ -1,1 +1,0 @@
-../../../upstream/tests/include/igl/intrinsic_delaunay_cotmatrix.cpp

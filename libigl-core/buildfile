@@ -1,0 +1,15 @@
+import libs = Eigen%lib{Eigen}
+
+./: lib{igl-core}: igl/{hxx ixx}{*} igl/ixx{raytri.c.} $libs
+{
+  cxx.export.poptions = "-I$src_root"
+  cxx.export.libs = $libs
+}
+
+if ($cxx.target.system != 'win32-msvc')
+  lib{igl-core}: cxx.export.libs += -pthread
+
+{hxx ixx}{*}: install = include/igl/
+
+./: manifest legal{LICENSE*} doc{*.md}
+./: tests/: install = false

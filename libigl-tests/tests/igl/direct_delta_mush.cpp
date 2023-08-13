@@ -1,1 +1,0 @@
-../../../upstream/tests/include/igl/direct_delta_mush.cpp

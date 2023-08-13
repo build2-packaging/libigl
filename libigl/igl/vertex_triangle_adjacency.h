@@ -1,1 +1,0 @@
-../../upstream/include/igl/vertex_triangle_adjacency.h

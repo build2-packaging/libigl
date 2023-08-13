@@ -1,7 +1,0 @@
-import libs = libigl%lib{igl}
-import libs += catch2%lib{catch2}
-
-exe{tests}: {hxx cxx}{**} $libs
-
-cxx.poptions += "-I$src_base" -DLIBIGL_DATA_DIR="\"$src_root/data\""
-cxx.poptions += -DCATCH_CONFIG_ENABLE_BENCHMARKING

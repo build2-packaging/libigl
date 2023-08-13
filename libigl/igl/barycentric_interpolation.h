@@ -1,1 +1,0 @@
-../../upstream/include/igl/barycentric_interpolation.h

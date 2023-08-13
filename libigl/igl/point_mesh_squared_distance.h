@@ -1,1 +1,0 @@
-../../upstream/include/igl/point_mesh_squared_distance.h

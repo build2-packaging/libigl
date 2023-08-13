@@ -1,1 +1,0 @@
-../../upstream/include/igl/basename.h
