@@ -8,6 +8,14 @@ import libs = Eigen%lib{Eigen}
 
 if ($cxx.target.system != 'win32-msvc')
   lib{igl-core}: cxx.export.libs += -pthread
+else
+{
+  lib{igl-core}:
+  {
+    cxx.export.poptions += -DNOMINMAX
+    cxx.export.coptions += /bigobj
+  }
+}
 
 {hxx ixx}{*}: install = include/igl/
 
