@@ -7,5 +7,8 @@ import libs += catch2%lib{catch2}
 exe{test_igl_core}: {hxx cxx}{*} igl/{hxx cxx}{*} $libs testscript
 
 cxx.poptions += "-I$src_base"
-cxx.poptions += -DLIBIGL_DATA_DIR="\"$src_root/data\""
+cxx.poptions += -DLIBIGL_DATA_DIR="\"$regex.replace($src_root, '\\', '\\\\')/data\""
 cxx.poptions += -DCATCH_CONFIG_ENABLE_BENCHMARKING
+
+if ($cxx.target.system == 'win32-msvc')
+  cxx.coptions += /bigobj

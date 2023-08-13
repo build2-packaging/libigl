@@ -13,7 +13,7 @@ else
   lib{igl-core}:
   {
     cxx.export.poptions += -DNOMINMAX
-    cxx.export.coptions += /bigobj
+    cxx.export.coptions = /bigobj
   }
 }
 
