@@ -17,3 +17,9 @@
 # Use `binary` to make sure certain files are never auto-detected as text.
 #
 #*.png binary
+
+# See: https://build2.org/article/symlinks.xhtml#windows
+libigl-core/igl symlink=dir
+libigl-core-tests/data symlink=dir
+libigl-core-tests/test_igl_core/igl symlink=dir
+
