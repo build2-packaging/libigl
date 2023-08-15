@@ -1,5 +1,5 @@
 import libs = libigl-imgui%lib{igl-imgui}
-exe{409_Kelvinlets}: {hxx cxx}{**} $libs
+exe{724_FastFindIntersections}: {hxx cxx}{**} $libs
 {
   test = false
 }

@@ -11,4 +11,6 @@ location: libigl-glfw/
 :
 location: libigl-imgui/
 :
+location: libigl-png/
+:
 location: libigl-tutorials/

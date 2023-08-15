@@ -1,0 +1,7 @@
+project = libigl-png
+
+using version
+using config
+using test
+using install
+using dist

@@ -1,10 +1,10 @@
 : 1
-name: libigl-imgui
+name: libigl-png
 version: 2.5.0-a.1
 project: libigl
-type: lib,binless
+type: lib
 language: c++
-summary: libigl's ImGUI Module
+summary: libigl's PNG Module
 license: MPL-2.0
 license: GPL-3.0-or-later
 
@@ -21,6 +21,6 @@ package-email: packaging@build2.org
 depends: * build2 >= 0.16.0
 depends: * bpkg >= 0.16.0
 
-depends: libigl-glfw == $
-depends: libimgui-platform-glfw ^1.85.0
-depends: libimgui-render-opengl3 ^1.85.0
+depends: libigl-opengl == $
+depends: stb_image ^2.26.0
+depends: stb_image_write ^1.15.0

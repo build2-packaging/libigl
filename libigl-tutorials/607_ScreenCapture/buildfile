@@ -1,0 +1,6 @@
+import libs = libigl-glfw%lib{igl-glfw}
+import libs += libigl-png%lib{igl-png}
+exe{607_ScreenCapture}: {hxx cxx}{**} $libs
+{
+  test = false
+}

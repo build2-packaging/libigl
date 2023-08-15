@@ -1,1 +1,8 @@
-./: {*/ -build/ -data/} manifest legal{LICENSE*} doc{*.md} data/file{**}
+# Currently, not all modules of libigl are supported.
+# So, not all tutorials can be build.
+# See: /upstream/libigl/tutorial/CMakeLists.txt
+#
+./: {*/ -build/ -data/ -109*/ -504*/ -505*/ -506*/ -6*/ -706*/ -710*/ -714*/ -715*/ -717*/}
+./: {607*/}
+
+./: manifest legal{LICENSE*} doc{*.md} data/file{**}
