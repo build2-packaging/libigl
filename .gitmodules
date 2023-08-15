@@ -4,3 +4,6 @@
 [submodule "upstream/libigl-tests-data"]
 	path = upstream/libigl-tests-data
 	url = https://github.com/libigl/libigl-tests-data.git
+[submodule "upstream/libigl-glad"]
+	path = upstream/libigl-glad
+	url = https://github.com/libigl/libigl-glad.git

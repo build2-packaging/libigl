@@ -2,3 +2,7 @@
 location: libigl-core/
 :
 location: libigl-core-tests/
+:
+location: libigl-glad/
+:
+location: libigl-opengl/

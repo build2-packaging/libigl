@@ -4,7 +4,7 @@ version: 2.5.0-a.1
 project: libigl
 type: lib,binless
 language: c++
-summary: A simple C++ geometry processing library
+summary: libigl's Core Module
 license: MPL-2.0
 license: GPL-3.0-or-later
 

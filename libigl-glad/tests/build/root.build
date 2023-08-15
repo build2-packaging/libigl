@@ -1,0 +1,14 @@
+cxx.std = latest
+
+using cxx
+
+hxx{*}: extension = h
+ixx{*}: extension = ipp
+txx{*}: extension = tpp
+cxx{*}: extension = cpp
+
+hxx{*}: cxx.importable = false
+
+test.target = $cxx.target
+
+exe{*}: test = true

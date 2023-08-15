@@ -1,10 +1,10 @@
 : 1
-name: libigl-core-tests
+name: libigl-glad
 version: 2.5.0-a.1
 project: libigl
-type: exe
+type: lib
 language: c++
-summary: Tests for libigl's Core Module
+summary: libigl's OpenGL Loader Module based on Glad
 license: MPL-2.0
 license: GPL-3.0-or-later
 
@@ -20,5 +20,3 @@ package-email: packaging@build2.org
 
 depends: * build2 >= 0.16.0
 depends: * bpkg >= 0.16.0
-
-depends: catch2 == 2.13.8

@@ -1,0 +1,13 @@
+import libs = libigl-core%lib{igl-core}
+import libs += libigl-glad%lib{igl-glad}
+
+./: lib{igl-opengl}: igl/opengl/{hxx ixx}{*} $libs
+{
+  cxx.export.poptions = "-I$src_root"
+  cxx.export.libs = $libs
+}
+
+{hxx ixx}{*}: install = include/igl/opengl
+
+./: manifest legal{LICENSE*} doc{*.md}
+./: tests/: install = false

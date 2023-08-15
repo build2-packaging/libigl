@@ -1,0 +1,7 @@
+project = libigl-opengl
+
+using version
+using config
+using test
+using install
+using dist

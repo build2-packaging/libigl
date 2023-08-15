@@ -1,0 +1,6 @@
+using c
+
+h{*}: extension = h
+c{*}: extension = c
+
+test.target = $cxx.target
