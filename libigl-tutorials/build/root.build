@@ -21,3 +21,6 @@ exe{*}: test = true
 # file path to the tutorial data files.
 #
 cxx.poptions += -DTUTORIAL_SHARED_PATH="\"$regex.replace($src_root, '\\', '\\\\')/data\""
+
+if ($cxx.target.system == 'win32-msvc')
+  cxx.coptions += /bigobj

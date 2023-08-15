@@ -21,6 +21,11 @@
 # See: https://build2.org/article/symlinks.xhtml#windows
 #
 libigl-core/igl symlink=dir
+libigl-opengl/igl symlink=dir
+libigl-glfw/igl symlink=dir
+libigl-imgui/igl symlink=dir
+libigl-png/igl symlink=dir
+
 libigl-core-tests/data symlink=dir
 libigl-core-tests/test_igl_core/igl symlink=dir
 libigl-tutorials/data symlink=dir

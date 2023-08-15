@@ -1,9 +1,9 @@
 <h1 align="center">
-    build2 Package for libigl
+    build2 Packages for Modules of libigl
 </h1>
 
 <p align="center">
-    This project builds and defines the build2 package for <a href="https://github.com/libigl/libigl">libigl</a>.
+    This project builds and defines the build2 packages for Modules of <a href="https://github.com/libigl/libigl">libigl</a>.
     libigl is a simple C++ geometry processing library.
 </p>
 
@@ -14,16 +14,16 @@
     <a href="https://github.com/build2-packaging/libigl">
         <img src="https://img.shields.io/website/https/github.com/build2-packaging/libigl.svg?down_message=offline&label=build2&style=for-the-badge&up_color=blue&up_message=online">
     </a>
-    <a href="https://cppget.org/libigl">
-        <img src="https://img.shields.io/website/https/cppget.org/libigl.svg?down_message=offline&label=cppget.org&style=for-the-badge&up_color=blue&up_message=online">
+    <a href="https://cppget.org/libigl-core">
+        <img src="https://img.shields.io/website/https/cppget.org/libigl-core.svg?down_message=offline&label=cppget.org&style=for-the-badge&up_color=blue&up_message=online">
     </a>
-    <a href="https://queue.cppget.org/libigl">
-        <img src="https://img.shields.io/website/https/queue.cppget.org/libigl.svg?down_message=empty&down_color=blue&label=queue.cppget.org&style=for-the-badge&up_color=orange&up_message=running">
+    <a href="https://queue.cppget.org/libigl-core">
+        <img src="https://img.shields.io/website/https/queue.cppget.org/libigl-core.svg?down_message=empty&down_color=blue&label=queue.cppget.org&style=for-the-badge&up_color=orange&up_message=running">
     </a>
 </p>
 
 ## Usage
-As libigl does not provide any versioning scheme, make sure to add the alpha section of the `cppget.org` repository to your project's `repositories.manifest` to be able to fetch this package.
+Add the alpha section of the `cppget.org` repository to your project's `repositories.manifest` to be able to fetch the packages of all provided libigl modules.
 
     :
     role: prerequisite
@@ -36,19 +36,51 @@ If the alpha section of `cppget.org` is not an option then add this Git reposito
     role: prerequisite
     location: https://github.com/build2-packaging/libigl.git
 
-Add the respective dependency in your project's `manifest` file to make the package available for import.
+Add the respective dependency in your project's `manifest` file to make the required packages/modules available for import.
 
-    depends: libigl ^ 2.4.0
+    depends: libigl-core ^2.5.0-
+    depends: libigl-opengl ^2.5.0-
+    depends: libigl-glfw ^2.5.0-
+    depends: libigl-imgui ^2.5.0-
+    depends: libigl-png ^2.5.0-
 
-The library to use libigl can be imported by the following declaration in a `buildfile`.
+The respective libraries can be imported by the following declarations in a `buildfile`.
 
-    import libigl = libigl%lib{libigl}
+    import igl_core = libigl-core%lib{igl-core}
+    import igl_opengl = libigl-opengl%lib{igl-opengl}
+    import igl_glfw = libigl-glfw%lib{igl-glfw}
+    import igl_imgui = libigl-imgui%lib{igl-imgui}
+    import igl_png = libigl-png%lib{igl-png}
 
 ## Configuration
-There are no configuration options vailable.
+There are no configuration options available.
 
-## Issues
-Currently, there are no known issues.
+## Issues and Notes
+- Currently, the optional static library modules are not supported. As build2 uses source-based distributions, we have to build the library anyway. But it would be nice to support it for better compile performance. As libigl does not really provide difficult or many configuration options, a naming scheme could be `igl-core-compiled` or `igl-core-srcfull` for the package `libigl-core`.
+- Currently unsupported libigl modules:
+    + `copyleft/*`
+    + `restricted/*`
+    + `embree` (Embree is hard to build by yourself. Maybe we can rely on system installed versions?)
+    + `predicates`
+    + `spectra`
+    + `xml` (probably easy to add)
+- Due to the unsupported modules, there are also unsupported tutorial entries. See: `/libigl-tutorials/buildfile`
+- Currently, ImGuizmo is not supported in the `libigl-imgui` package.
+- Dear ImGui for `libigl-imgui` is compiled without `IMGUI_IMPL_OPENGL_LOADER_GLAD` and `IMGUI_DISABLE_OBSOLETE_FUNCTIONS` in contrast to the upstream build system. It does not seem to make a difference. See: `/upstream/libigl/cmake/recipes/external/imgui.cmake`
+- `libigl-imgui` is not installable. The original module uses strange include paths for ImGui backends and its fonts. These paths are currently fixed by wrapper headers in the root of the package. But these headers should not be installed as they would pollute the global include folder.
+- For now, there is no stub package `libigl` that allows you to include all other modules at once by using `import igl = libigl%lib{igl}`. Maybe it would be useful?
+- Currently, `libigl-glfw` is forced to use `libigl-glad` as OpenGL loader. For local workflows without installation, this is ok. We need to add the ability to change the loader library for global installation.
+- `libigl-glad` should not be installed. It needs the KHR platform header. There should be a configuration to disable its use.
+- To compile and run the tests and tutorials, a lot of memory and computing power is needed. The process will be aborted and probably fail when not enough memory is present.
+- For MSVC on Windows, everything including libigl should be compiled with `/bigobj`.
+- Tutorials `104`, `701`, and `704` seem to not work correctly. Building these tutorials with the upstream CMake-based system works.
+- Unit tests are not provided for all modules of libigl. For such cases, only basic inclusion tests are used.
+- All Git submodules have been put into the `upstream` folder to provide a cleaner directory structure.
+- In the upstream build, every dependency is loaded as an external project by CMake. We do not do that but need to keep track of their versions and commit references. Maybe add an entry to check that. Maybe we should add a general section on things to consider when trying to update the packages or release a new version?
+- For easier inclusion of source files, several directory symlinks to `include/igl` are used.
+- For now and specifically for the upcoming version `2.5.0`, libigl does not use alpha or beta releases. So, it is ok to use alpha versions for snapshots in this build2 repository.
+- Previous definite versions of libigl, fail to compile for strange reasons. So, the up-to-date main branch is used as a reference.
+- Probably, all the buildfiles do not contain enough comments.
 
 ## Contributing
 Thanks in advance for your help and contribution to keep this package up-to-date.

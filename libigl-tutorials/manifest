@@ -23,3 +23,5 @@ depends: * bpkg >= 0.16.0
 
 depends: libigl-core == $
 depends: libigl-glfw == $
+depends: libigl-imgui == $
+depends: libigl-png == $
