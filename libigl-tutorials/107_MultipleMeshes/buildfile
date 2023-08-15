@@ -1,0 +1,5 @@
+import libs = libigl-glfw%lib{igl-glfw}
+exe{107_MultipleMeshes}: {hxx cxx}{**} $libs
+{
+  test = false
+}

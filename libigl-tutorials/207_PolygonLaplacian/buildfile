@@ -1,0 +1,5 @@
+import libs = libigl-glfw%lib{igl-glfw}
+exe{207_PolygonLaplacian}: {hxx cxx}{**} $libs
+{
+  test = false
+}

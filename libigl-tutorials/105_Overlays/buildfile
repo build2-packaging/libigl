@@ -1,0 +1,5 @@
+import libs = libigl-imgui%lib{igl-imgui}
+exe{105_Overlays}: {hxx cxx}{**} $libs
+{
+  test = false
+}

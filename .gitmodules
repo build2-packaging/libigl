@@ -7,3 +7,9 @@
 [submodule "upstream/libigl-glad"]
 	path = upstream/libigl-glad
 	url = https://github.com/libigl/libigl-glad.git
+[submodule "upstream/libigl-tutorial-data"]
+	path = upstream/libigl-tutorial-data
+	url = https://github.com/libigl/libigl-tutorial-data.git
+[submodule "upstream/libigl-imgui-fonts"]
+	path = upstream/libigl-imgui-fonts
+	url = https://github.com/libigl/libigl-imgui.git

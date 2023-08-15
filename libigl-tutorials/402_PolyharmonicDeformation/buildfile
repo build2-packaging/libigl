@@ -1,0 +1,5 @@
+import libs = libigl-glfw%lib{igl-glfw}
+exe{402_PolyharmonicDeformation}: {hxx cxx}{**} $libs
+{
+  test = false
+}

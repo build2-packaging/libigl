@@ -1,0 +1,13 @@
+import libs = libigl-opengl%lib{igl-opengl}
+import libs += glfw%lib{glfw}
+
+./: lib{igl-glfw}: igl/opengl/glfw/{hxx ixx}{*} $libs
+{
+  cxx.export.poptions = "-I$src_root"
+  cxx.export.libs = $libs
+}
+
+{hxx ixx}{*}: install = include/igl/opengl/glfw/
+
+./: manifest legal{LICENSE*} doc{*.md}
+./: tests/: install = false

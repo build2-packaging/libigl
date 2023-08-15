@@ -1,0 +1,10 @@
+project = libigl-tutorials
+
+using version
+using config
+using test
+using dist
+
+# Tutorials will not be installed.
+#
+# using install

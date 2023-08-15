@@ -1,0 +1,14 @@
+import libs = libigl-glfw%lib{igl-glfw}
+import libs += libimgui-platform-glfw%lib{imgui-platform-glfw}
+import libs += libimgui-render-opengl3%lib{imgui-render-opengl3}
+
+./: lib{igl-imgui}: igl/opengl/glfw/imgui/{hxx ixx}{*} backends/{hxx ixx}{*} {hxx ixx}{*} $libs
+{
+  cxx.export.poptions = "-I$src_root"
+  cxx.export.libs = $libs
+}
+
+{hxx ixx}{*}: install = include/igl/opengl/glfw/imgui/
+
+./: manifest legal{LICENSE*} doc{*.md}
+./: tests/: install = false

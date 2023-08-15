@@ -1,0 +1,5 @@
+import libs = libigl-glfw%lib{igl-glfw}
+exe{204_Gradient}: {hxx cxx}{**} $libs
+{
+  test = false
+}

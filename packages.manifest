@@ -6,3 +6,9 @@ location: libigl-core-tests/
 location: libigl-glad/
 :
 location: libigl-opengl/
+:
+location: libigl-glfw/
+:
+location: libigl-imgui/
+:
+location: libigl-tutorials/

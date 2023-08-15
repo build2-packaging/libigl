@@ -1,0 +1,5 @@
+import libs = libigl-glfw%lib{igl-glfw}
+exe{403_BoundedBiharmonicWeights}: {hxx cxx}{**} $libs
+{
+  test = false
+}

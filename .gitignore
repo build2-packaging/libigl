@@ -6,6 +6,7 @@
 !libigl-core/igl
 !libigl-core-tests/data
 !libigl-core-tests/test_igl_core/igl
+!libigl-tutorials/data
 
 !*.h
 !*.c

@@ -1,0 +1,5 @@
+import libs = libigl-glfw%lib{igl-glfw}
+exe{104_Colors}: {hxx cxx}{**} $libs
+{
+  test = false
+}

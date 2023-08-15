@@ -1,0 +1,23 @@
+# Uncomment to suppress warnings coming from external libraries.
+#
+cxx.internal.scope = current
+
+cxx.std = latest
+
+using cxx
+
+hxx{*}: extension = h
+ixx{*}: extension = cpp
+txx{*}: extension = tpp
+cxx{*}: extension = cpp
+
+hxx{*}: cxx.importable = false
+
+test.target = $cxx.target
+
+exe{*}: test = true
+
+# Provide all tutorials with an absolute
+# file path to the tutorial data files.
+#
+cxx.poptions += -DTUTORIAL_SHARED_PATH="\"$regex.replace($src_root, '\\', '\\\\')/data\""

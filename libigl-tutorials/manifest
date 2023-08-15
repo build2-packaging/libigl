@@ -1,0 +1,25 @@
+: 1
+name: libigl-tutorials
+version: 2.5.0-a.1
+project: libigl
+type: exe
+language: c++
+summary: Tutorials for libigl
+license: MPL-2.0
+license: GPL-3.0-or-later
+
+description-file: README.md
+url: https://libigl.github.io/
+doc-url: https://libigl.github.io/
+src-url: https://github.com/libigl/libigl
+email: alecjacobson@gmail.com, daniele.panozzo@gmail.com
+
+package-description-file: PACKAGE-README.md
+package-url: https://github.com/build2-packaging/libigl/
+package-email: packaging@build2.org
+
+depends: * build2 >= 0.16.0
+depends: * bpkg >= 0.16.0
+
+depends: libigl-core == $
+depends: libigl-glfw == $

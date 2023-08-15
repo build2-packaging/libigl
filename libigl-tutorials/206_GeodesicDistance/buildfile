@@ -1,0 +1,5 @@
+import libs = libigl-glfw%lib{igl-glfw}
+exe{206_GeodesicDistance}: {hxx cxx}{**} $libs
+{
+  test = false
+}
