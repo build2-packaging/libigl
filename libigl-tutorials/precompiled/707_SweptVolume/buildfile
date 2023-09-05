@@ -1,0 +1,5 @@
+import libs = libigl-glfw%lib{igl-glfw}
+exe{707_SweptVolume}: {hxx cxx}{**} $libs
+{
+  test = false
+}

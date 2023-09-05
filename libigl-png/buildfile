@@ -1,12 +1,22 @@
-import libs = libigl-opengl%lib{igl-opengl}
-import libs += stb_image%lib{stb_image}
+import igl_opengl = libigl-opengl%lib{igl-opengl}
+import igl_opengl_compiled = libigl-opengl%liba{igl-opengl-compiled}
+
+import libs = stb_image%lib{stb_image}
 import libs += stb_image_write%lib{stb_image_write}
 
-./: lib{igl-png}: cxx{*} igl/png/{hxx ixx}{*} $libs
+./: lib{igl-png}: cxx{*} igl/png/{hxx ixx}{*} $libs $igl_opengl
 {
   cxx.export.poptions = "-I$src_root"
-  cxx.export.libs = $libs
+  cxx.export.libs = $libs $igl_opengl
 }
+
+./: liba{igl-png-compiled}: cxx{*} igl/png/{hxx cxx}{*} $libs $igl_opengl_compiled
+{
+  cxx.export.poptions = "-I$src_root"
+  cxx.export.libs = $libs $igl_opengl_compiled
+}
+
+cxx.poptions =+ "-I$src_root"
 
 {hxx ixx}{*}: install = include/igl/png/
 

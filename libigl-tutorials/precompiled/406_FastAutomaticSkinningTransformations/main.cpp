@@ -1,0 +1,1 @@
+../../../upstream/libigl/tutorial/406_FastAutomaticSkinningTransformations/main.cpp

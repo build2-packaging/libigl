@@ -1,0 +1,5 @@
+import libs = libigl-imgui%lib{igl-imgui}
+exe{109_ImGuizmo}: {hxx cxx}{**} $libs
+{
+  test = false
+}

@@ -1,0 +1,5 @@
+import libs = libigl-glfw%lib{igl-glfw}
+exe{302_Sort}: {hxx cxx}{**} $libs
+{
+  test = false
+}

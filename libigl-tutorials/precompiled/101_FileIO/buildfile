@@ -1,0 +1,2 @@
+import libs = libigl-core%liba{igl-core-compiled}
+exe{run}: {hxx cxx}{**} $libs

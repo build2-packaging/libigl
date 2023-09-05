@@ -1,0 +1,5 @@
+import libs = libigl-imgui%lib{igl-imgui}
+exe{723_FastFindSelfIntersections}: {hxx cxx}{**} $libs
+{
+  test = false
+}

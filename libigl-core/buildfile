@@ -6,15 +6,27 @@ import libs = Eigen%lib{Eigen}
   cxx.export.libs = $libs
 }
 
+./: liba{igl-core-compiled}: igl/{hxx cxx}{*} igl/cxx{raytri...c} $libs
+{
+  cxx.export.poptions = "-I$src_root" -DIGL_STATIC_LIBRARY
+  cxx.export.libs = $libs
+}
+
+cxx.poptions =+ "-I$src_root"
+obja{*}: cxx.poptions += -DIGL_STATIC_LIBRARY
+
 if ($cxx.target.system != 'win32-msvc')
+{
   lib{igl-core}: cxx.export.libs += -pthread
+  liba{igl-core-compiled}: cxx.export.libs += -pthread
+  cxx.libs += -pthread
+}
 else
 {
-  lib{igl-core}:
-  {
-    cxx.export.poptions += -DNOMINMAX
-    cxx.export.coptions = /bigobj
-  }
+  lib{igl-core}: cxx.export.poptions += -DNOMINMAX
+  liba{igl-core-compiled}: cxx.export.poptions += -DNOMINMAX
+  cxx.poptions += -DNOMINMAX
+  cxx.coptions += /bigobj
 }
 
 {hxx ixx}{*}: install = include/igl/

@@ -1,0 +1,5 @@
+import libs = libigl-glfw%lib{igl-glfw}
+exe{711_Subdivision}: {hxx cxx}{**} $libs
+{
+  test = false
+}

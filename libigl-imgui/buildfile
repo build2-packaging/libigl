@@ -1,12 +1,22 @@
-import libs = libigl-glfw%lib{igl-glfw}
-import libs += libimgui-platform-glfw%lib{imgui-platform-glfw}
-import libs += libimgui-render-opengl3%lib{imgui-render-opengl3}
+import imgui = libimgui-platform-glfw%lib{imgui-platform-glfw}
+import imgui += libimgui-render-opengl3%lib{imgui-render-opengl3}
 
-./: lib{igl-imgui}: igl/opengl/glfw/imgui/{hxx ixx}{*} backends/{hxx ixx}{*} {hxx ixx}{*} $libs
+import igl_glfw = libigl-glfw%lib{igl-glfw}
+import igl_glfw_compiled = libigl-glfw%liba{igl-glfw-compiled}
+
+./: lib{igl-imgui}: igl/opengl/glfw/imgui/{hxx ixx}{*} backends/{hxx ixx}{*} {hxx ixx}{*} $imgui $igl_glfw
 {
   cxx.export.poptions = "-I$src_root"
-  cxx.export.libs = $libs
+  cxx.export.libs = $imgui $igl_glfw
 }
+
+./: liba{igl-imgui-compiled}: igl/opengl/imgui/{hxx cxx}{*} backends/{hxx cxx}{*} {hxx cxx}{*} $imgui $igl_glfw_compiled
+{
+  cxx.export.poptions = "-I$src_root"
+  cxx.export.libs = $imgui $igl_glfw_compiled
+}
+
+cxx.poptions =+ "-I$src_root"
 
 {hxx ixx}{*}: install = include/igl/opengl/glfw/imgui/
 

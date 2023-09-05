@@ -1,10 +1,17 @@
-import libs = libigl-core%lib{igl-core}
-import libs += libigl-glad%lib{igl-glad}
+import glad = libigl-glad%lib{igl-glad}
+import igl_core = libigl-core%lib{igl-core}
+import igl_core_compiled = libigl-core%liba{igl-core-compiled}
 
-./: lib{igl-opengl}: igl/opengl/{hxx ixx}{*} $libs
+./: lib{igl-opengl}: igl/opengl/{hxx ixx}{*} $glad $igl_core
 {
   cxx.export.poptions = "-I$src_root"
-  cxx.export.libs = $libs
+  cxx.export.libs = $glad $igl_core
+}
+
+./: liba{igl-opengl-compiled}: igl/opengl/{hxx cxx}{*} $glad $igl_core_compiled
+{
+  cxx.export.poptions = "-I$src_root"
+  cxx.export.libs = $glad $igl_core_compiled
 }
 
 {hxx ixx}{*}: install = include/igl/opengl/

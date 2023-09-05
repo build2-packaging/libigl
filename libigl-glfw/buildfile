@@ -1,10 +1,17 @@
-import libs = libigl-opengl%lib{igl-opengl}
-import libs += glfw%lib{glfw}
+import glfw = glfw%lib{glfw}
+import igl_opengl = libigl-opengl%lib{igl-opengl}
+import igl_opengl_compiled = libigl-opengl%liba{igl-opengl-compiled}
 
-./: lib{igl-glfw}: igl/opengl/glfw/{hxx ixx}{*} $libs
+./: lib{igl-glfw}: igl/opengl/glfw/{hxx ixx}{*} $glfw $igl_opengl
 {
   cxx.export.poptions = "-I$src_root"
-  cxx.export.libs = $libs
+  cxx.export.libs = $glfw $igl_opengl
+}
+
+./: liba{igl-glfw-compiled}: igl/opengl/glfw/{hxx cxx}{*} $glfw $igl_opengl_compiled
+{
+  cxx.export.poptions = "-I$src_root"
+  cxx.export.libs = $glfw $igl_opengl_compiled
 }
 
 {hxx ixx}{*}: install = include/igl/opengl/glfw/

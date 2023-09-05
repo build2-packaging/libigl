@@ -1,0 +1,3 @@
+import libs = libigl-glfw%liba{igl-glfw-compiled}
+import libs += libigl-png%liba{igl-png-compiled}
+exe{run}: {hxx cxx}{*} $libs

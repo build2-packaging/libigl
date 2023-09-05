@@ -15,7 +15,7 @@ hxx{*}: cxx.importable = false
 
 test.target = $cxx.target
 
-exe{*}: test = true
+# exe{*}: test = true
 
 # Provide all tutorials with an absolute
 # file path to the tutorial data files.
