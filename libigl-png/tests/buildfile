@@ -1,2 +1,4 @@
 import lib = libigl-png%lib{igl-png}
-exe{tests}: {hxx cxx}{**} $lib
+./: exe{tests}: {hxx cxx}{*} $lib
+
+./: precompiled/

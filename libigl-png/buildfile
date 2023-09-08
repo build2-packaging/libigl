@@ -1,23 +1,49 @@
-import igl_opengl = libigl-opengl%lib{igl-opengl}
-import igl_opengl_compiled = libigl-opengl%liba{igl-opengl-compiled}
-
+# Dependencies
+#
 import libs = stb_image%lib{stb_image}
 import libs += stb_image_write%lib{stb_image_write}
 
-./: lib{igl-png}: cxx{*} igl/png/{hxx ixx}{*} $libs $igl_opengl
+# Utility Library for the stb Implementations
+#
+libul{stb}: cxx{*} $libs
+
+# Header-Only Library
+#
+# This library is not binless
+# as the stb libary implementations are included in 'stb_image.cpp'.
+#
+import igl_opengl = libigl-opengl%lib{igl-opengl}
+./: lib{igl-png}: igl/png/{hxx ixx}{*} libul{stb} $igl_opengl
 {
   cxx.export.poptions = "-I$src_root"
   cxx.export.libs = $libs $igl_opengl
 }
 
-./: liba{igl-png-compiled}: cxx{*} igl/png/{hxx cxx}{*} $libs $igl_opengl_compiled
+# Precompiled Static Library
+#
+import igl_opengl_compiled = libigl-opengl%liba{igl-opengl-compiled}
+./: liba{igl-png-compiled}: igl/png/{hxx cxx}{*} libul{stb} $igl_opengl_compiled
 {
   cxx.export.poptions = "-I$src_root"
-  cxx.export.libs = $libs $igl_opengl_compiled
+  cxx.export.libs = $igl_opengl_compiled
 }
 
+# Build Options
+#
 cxx.poptions =+ "-I$src_root"
 
+# For pre-releases use the complete version to make sure they cannot be used
+# in place of another pre-release or the final version. See the version module
+# for details on the version.* variable values.
+#
+if $version.pre_release
+  liba{igl-png-compiled}: bin.lib.version = "-$version.project_id"
+else
+  liba{igl-png-compiled}: bin.lib.version = "-$version.major.$version.minor"
+
+# Mark header and inclusion files as to be installed.
+# Inclusion files are only installed when depending on lib{igl-core}.
+#
 {hxx ixx}{*}: install = include/igl/png/
 
 ./: manifest legal{LICENSE*} doc{*.md}
