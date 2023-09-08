@@ -1,5 +1,2 @@
-import libs = libigl-glfw%lib{igl-glfw}
-exe{301_Slice}: {hxx cxx}{**} $libs
-{
-  test = false
-}
+import libs = libigl-glfw%liba{igl-glfw-compiled}
+exe{run}: {hxx cxx}{*} $libs

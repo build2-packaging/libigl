@@ -1,8 +1,19 @@
+./: manifest legal{LICENSE*} doc{*.md} data/file{**}
+./: precompiled/
+
 # Currently, not all modules of libigl are supported.
 # So, not all tutorials can be build.
 # See: /upstream/libigl/tutorial/CMakeLists.txt
 #
-./: {*/ -build/ -data/ -109*/ -504*/ -505*/ -506*/ -6*/ -706*/ -710*/ -714*/ -715*/ -717*/}
-./: {607*/}
+# 113 Shadows: The 'imgui' module is not needed.
+#
+./: {1*/ -109*/}
+./: {2*/}
+./: {3*/}
+./: {4*/}
+./: {5*/ -504*/ -505*/ -506*/}
+./: {7*/ -706*/ -710*/ -714*/ -715*/ -717*/}
 
-./: manifest legal{LICENSE*} doc{*.md} data/file{**}
+# No tutorial of chapter six is currently supported.
+#
+# ./: {6*/}

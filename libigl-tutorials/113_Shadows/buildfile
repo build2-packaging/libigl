@@ -1,6 +1,3 @@
 import libs = libigl-glfw%lib{igl-glfw}
 import libs += libigl-png%lib{igl-png}
-exe{113_Shadows}: {hxx cxx}{**} $libs
-{
-  test = false
-}
+exe{run}: {hxx cxx}{*} $libs

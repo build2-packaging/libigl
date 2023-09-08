@@ -1,5 +1,2 @@
 import libs = libigl-glfw%lib{igl-glfw}
-exe{713_ShapeUp}: {hxx cxx}{**} $libs
-{
-  test = false
-}
+exe{run}: {hxx cxx}{*} $libs

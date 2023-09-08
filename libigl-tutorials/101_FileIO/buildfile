@@ -1,2 +1,2 @@
 import libs = libigl-core%lib{igl-core}
-exe{101_FileIO}: {hxx cxx}{**} $libs
+exe{run}: {hxx cxx}{**} $libs

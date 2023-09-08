@@ -1,5 +1,2 @@
 import libs = libigl-imgui%lib{igl-imgui}
-exe{112_Selection}: {hxx cxx}{**} $libs
-{
-  test = false
-}
+exe{run}: {hxx cxx}{*} $libs

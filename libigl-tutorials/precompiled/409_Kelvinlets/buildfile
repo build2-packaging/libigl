@@ -1,5 +1,2 @@
-import libs = libigl-imgui%lib{igl-imgui}
-exe{409_Kelvinlets}: {hxx cxx}{**} $libs
-{
-  test = false
-}
+import libs = libigl-imgui%liba{igl-imgui-compiled}
+exe{run}: {hxx cxx}{*} $libs

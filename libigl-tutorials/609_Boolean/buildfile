@@ -1,5 +1,2 @@
 import libs = libigl-glfw%lib{igl-glfw}
-exe{609_Boolean}: {hxx cxx}{**} $libs
-{
-  test = false
-}
+exe{run}: {hxx cxx}{*} $libs
