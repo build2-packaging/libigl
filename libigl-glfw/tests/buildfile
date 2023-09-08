@@ -1,2 +1,4 @@
 import lib = libigl-glfw%lib{igl-glfw}
-exe{tests}: {hxx cxx}{**} $lib
+./: exe{tests}: {hxx cxx}{*} $lib
+
+./: precompiled/
