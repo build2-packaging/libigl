@@ -27,5 +27,6 @@ libigl-imgui/igl symlink=dir
 libigl-png/igl symlink=dir
 
 libigl-core-tests/data symlink=dir
-libigl-core-tests/test_igl_core/igl symlink=dir
+libigl-core-tests/header-only/igl symlink=dir
+libigl-core-tests/precompiled/igl symlink=dir
 libigl-tutorials/data symlink=dir

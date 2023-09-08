@@ -1,7 +1,3 @@
-# Uncomment to suppress warnings coming from external libraries.
-#
-cxx.internal.scope = current
-
 cxx.std = latest
 
 using cxx
@@ -16,3 +12,10 @@ hxx{*}: cxx.importable = false
 test.target = $cxx.target
 
 exe{*}: test = true
+
+# Provide common importations and build options.
+#
+import libs = catch2%lib{catch2}
+cxx.poptions += -DLIBIGL_DATA_DIR="\"$regex.replace($src_root, '\\', '\\\\')/data\""
+cxx.poptions += -DCATCH_CONFIG_ENABLE_BENCHMARKING
+cxx.poptions =+ "-I$src_root"

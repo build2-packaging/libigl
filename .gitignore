@@ -5,7 +5,8 @@
 
 !libigl-*/igl
 !libigl-core-tests/data
-!libigl-core-tests/test_igl_core/igl
+!libigl-core-tests/header-only/igl
+!libigl-core-tests/precompiled/igl
 !libigl-tutorials/data
 
 !libigl-core/tests/cube.off
