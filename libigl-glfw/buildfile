@@ -23,6 +23,10 @@ import igl_opengl_compiled = libigl-opengl%liba{igl-opengl-compiled}
   cxx.export.libs = $glfw $igl_opengl_compiled
 }
 
+# Build Options
+#
+cxx.poptions =+ "-I$src_root"
+
 # For pre-releases use the complete version to make sure they cannot be used
 # in place of another pre-release or the final version. See the version module
 # for details on the version.* variable values.
