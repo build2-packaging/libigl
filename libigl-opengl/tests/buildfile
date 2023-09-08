@@ -1,2 +1,4 @@
 import lib = libigl-opengl%lib{igl-opengl}
-exe{tests}: {hxx cxx}{**} $lib
+./: exe{tests}: {hxx cxx}{*} $lib
+
+./: precompiled/
