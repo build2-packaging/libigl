@@ -1,0 +1,2 @@
+ln -s $src_root/cube.off cube.off;
+$* >- &cube.obj == 0

@@ -1,2 +1,4 @@
 import igl = libigl-core%lib{igl-core}
-exe{tests}: {hxx cxx}{**} $igl
+./: exe{tests}: {hxx cxx}{*} $igl testscript
+
+./: precompiled/

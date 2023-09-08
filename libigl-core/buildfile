@@ -1,17 +1,25 @@
+# Dependencies
+#
 import libs = Eigen%lib{Eigen}
 
-./: lib{igl-core}: igl/{hxx ixx}{*} igl/ixx{raytri.c.} $libs
+# Header-Only Library
+#
+./: lib{igl-core}: igl/{hxx ixx}{*} igl/ixx{raytri.c} $libs
 {
   cxx.export.poptions = "-I$src_root"
   cxx.export.libs = $libs
 }
 
-./: liba{igl-core-compiled}: igl/{hxx cxx}{*} igl/cxx{raytri...c} $libs
+# Precompiled Static Library
+#
+./: liba{igl-core-compiled}: igl/{hxx cxx}{*} igl/cxx{raytri.c} $libs
 {
   cxx.export.poptions = "-I$src_root" -DIGL_STATIC_LIBRARY
   cxx.export.libs = $libs
 }
 
+# Build and Export Options
+#
 cxx.poptions =+ "-I$src_root"
 obja{*}: cxx.poptions += -DIGL_STATIC_LIBRARY
 
@@ -29,6 +37,18 @@ else
   cxx.coptions += /bigobj
 }
 
+# For pre-releases use the complete version to make sure they cannot be used
+# in place of another pre-release or the final version. See the version module
+# for details on the version.* variable values.
+#
+if $version.pre_release
+  liba{igl-core-compiled}: bin.lib.version = "-$version.project_id"
+else
+  liba{igl-core-compiled}: bin.lib.version = "-$version.major.$version.minor"
+
+# Mark header and inclusion files as to be installed.
+# Inclusion files are only installed when depending on lib{igl-core}.
+#
 {hxx ixx}{*}: install = include/igl/
 
 ./: manifest legal{LICENSE*} doc{*.md}
