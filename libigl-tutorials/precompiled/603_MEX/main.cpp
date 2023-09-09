@@ -1,1 +1,0 @@
-../../../upstream/libigl/tutorial/603_MEX/main.cpp
