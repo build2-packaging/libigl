@@ -14,20 +14,21 @@
 |`libigl-png` | [![cppget.org](https://img.shields.io/website/https/cppget.org/libigl-png.svg?down_message=offline&label=cppget.org&style=for-the-badge&up_color=blue&up_message=online)](https://cppget.org/libigl-png) | [![queue.cppget.org](https://img.shields.io/website/https/queue.cppget.org/libigl-png.svg?down_message=empty&down_color=blue&label=queue.cppget.org&style=for-the-badge&up_color=orange&up_message=running)](https://queue.cppget.org/libigl-png)|
 
 ## Usage
-Add the alpha section of the `cppget.org` repository to your project's `repositories.manifest` to be able to fetch the packages of all provided libigl modules.
+Currently, not all `libigl` packages can be found on `cppget.org`.
+It is recommend to add this Git repository itself instead as a prerequisite to your `repositories.manifest` to be able to fetch the up-to-date packages of all provided libigl modules.
+
+    :
+    role: prerequisite
+    location: https://github.com/build2-packaging/libigl.git
+
+Otherwise, you will either have to add the stable or the alpha section of the `cppget.org` repository.
 
     :
     role: prerequisite
     location: https://pkg.cppget.org/1/alpha
     # trust: ...
 
-If the alpha section of `cppget.org` is not an option then add this Git repository itself instead as a prerequisite.
-
-    :
-    role: prerequisite
-    location: https://github.com/build2-packaging/libigl.git
-
-Add the respective dependency in your project's `manifest` file to make the required packages/modules available for import.
+Add the respective dependency in your project's `manifest` file to make the required packages available for import.
 
     depends: libigl-core ^2.5.0-
     depends: libigl-opengl ^2.5.0-
@@ -35,19 +36,38 @@ Add the respective dependency in your project's `manifest` file to make the requ
     depends: libigl-imgui ^2.5.0-
     depends: libigl-png ^2.5.0-
 
-The respective libraries can be imported by the following declarations in a `buildfile`.
+The respective header-only and precompiled libraries can be imported by the following declarations in a `buildfile`.
+Please note, precompiled versions are only exported as static libraries by the packages.
+
+**`core` Module:**
 
     import igl_core = libigl-core%lib{igl-core}
+    import igl_core_compiled = libigl-core%liba{igl-core-compiled}
+
+**`opengl` Module:**
+
     import igl_opengl = libigl-opengl%lib{igl-opengl}
+    import igl_opengl_compiled = libigl-opengl%liba{igl-opengl-compiled}
+
+**`glfw` Module:**
+
     import igl_glfw = libigl-glfw%lib{igl-glfw}
+    import igl_glfw_compiled = libigl-glfw%liba{igl-glfw-compiled}
+
+**`imgui` Module:**
+
     import igl_imgui = libigl-imgui%lib{igl-imgui}
+    import igl_imgui_compiled = libigl-imgui%liba{igl-imgui-compiled}
+
+**`png` Module:**
+
     import igl_png = libigl-png%lib{igl-png}
+    import igl_png_compiled = libigl-png%liba{igl-png-compiled}
 
 ## Configuration
 There are no configuration options available.
 
 ## Issues and Notes
-- Currently, the optional static library modules are not supported. As build2 uses source-based distributions, we have to build the library anyway. But it would be nice to support it for better compile performance. As libigl does not really provide difficult or many configuration options, a naming scheme could be `igl-core-compiled` or `igl-core-srcfull` for the package `libigl-core`.
 - Currently unsupported libigl modules:
     + `copyleft/*`
     + `restricted/*`
