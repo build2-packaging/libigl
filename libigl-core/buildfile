@@ -4,7 +4,7 @@ import libs = Eigen%lib{Eigen}
 
 # Header-Only Library
 #
-./: lib{igl-core}: igl/{hxx ixx}{*} igl/ixx{raytri.c} $libs
+./: lib{igl-core}: igl/{hxx ixx}{*} igl/hxx{*.hpp} igl/ixx{raytri.c} $libs
 {
   cxx.export.poptions = "-I$src_root"
   cxx.export.libs = $libs
@@ -12,7 +12,7 @@ import libs = Eigen%lib{Eigen}
 
 # Precompiled Static Library
 #
-./: liba{igl-core-compiled}: igl/{hxx cxx}{*} igl/cxx{raytri.c} $libs
+./: liba{igl-core-compiled}: igl/{hxx cxx}{*} igl/hxx{*.hpp} igl/cxx{raytri.c} $libs
 {
   cxx.export.poptions = "-I$src_root" -DIGL_STATIC_LIBRARY
   cxx.export.libs = $libs
