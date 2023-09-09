@@ -68,33 +68,39 @@ Please note, precompiled versions are only exported as static libraries by the p
 There are no configuration options available.
 
 ## Issues and Notes
-- Currently unsupported libigl modules:
+- Previous definite versions of libigl, fail to compile for strange reasons. So, the up-to-date main branch is used as an upstream reference, for now. To get around problems concerning versioning, we use alpha releases. `libigl` does not use alpha or beta releases. Esspecially, not for the upcoming version `2.5.0`. So, it seems to be a valid solution to use alpha versions for snapshots in this build2 packaging attempt.
+
+### Unsupported Modules
+- Currently unsupported `libigl` modules:
     + `copyleft/*`
     + `restricted/*`
     + `embree` (Embree is hard to build by yourself. Maybe we can rely on system installed versions?)
     + `predicates`
     + `spectra`
     + `xml` (probably easy to add)
-- Due to the unsupported modules, there are also unsupported tutorial entries. See: `/libigl-tutorials/buildfile`
-- Currently, ImGuizmo is not supported in the `libigl-imgui` package.
-- Dear ImGui for `libigl-imgui` is compiled without `IMGUI_IMPL_OPENGL_LOADER_GLAD` and `IMGUI_DISABLE_OBSOLETE_FUNCTIONS` in contrast to the upstream build system. It does not seem to make a difference. See: `/upstream/libigl/cmake/recipes/external/imgui.cmake`
-- `libigl-imgui` is not installable. The original module uses strange include paths for ImGui backends and its fonts. These paths are currently fixed by wrapper headers in the root of the package. But these headers should not be installed as they would pollute the global include folder.
-- For now, there is no stub package `libigl` that allows you to include all other modules at once by using `import igl = libigl%lib{igl}`. Maybe it would be useful?
-- Currently, `libigl-glfw` is forced to use `libigl-glad` as OpenGL loader. For local workflows without installation, this is ok. We need to add the ability to change the loader library for global installation.
-- `libigl-glad` should not be installed. It needs the KHR platform header. There should be a configuration to disable its use.
-- To compile and run the tests and tutorials, a lot of memory and computing power is needed. The process will be aborted and probably fail when not enough memory is present.
-- For MSVC on Windows, everything including libigl should be compiled with `/bigobj`.
-- Tutorials `104`, `701`, and `704` seem to not work correctly. Building these tutorials with the upstream CMake-based system works.
-- Unit tests are not provided for all modules of libigl. For such cases, only basic inclusion tests are used.
 - All Git submodules have been put into the `upstream` folder to provide a cleaner directory structure.
 - In the upstream build, every dependency is loaded as an external project by CMake. We do not do that but need to keep track of their versions and commit references. Maybe add an entry to check that. Maybe we should add a general section on things to consider when trying to update the packages or release a new version?
 - For easier inclusion of source files, several directory symlinks to `include/igl` are used.
-- For now and specifically for the upcoming version `2.5.0`, libigl does not use alpha or beta releases. So, it is ok to use alpha versions for snapshots in this build2 repository.
-- Previous definite versions of libigl, fail to compile for strange reasons. So, the up-to-date main branch is used as a reference.
-- Probably, all the buildfiles do not contain enough comments.
+- Unit tests are not provided for all modules of libigl. For such cases, only basic inclusion tests are used.
+- For now, there is no stub package `libigl` that allows you to include all other modules at once by using `import igl = libigl%lib{igl}`. It is likely that it wouldn't be used that much.
+
+### `opengl` and `glad` Module
+- Currently, `libigl-glfw` is forced to use `libigl-glad` as OpenGL loader. For local workflows without installation, this is ok. We need to add the ability to change the loader library for global installation.
+- `libigl-glad` should not be installed. It needs the KHR platform header. There should be a configuration to disable its use.
+
+### `imgui` Module
+- Currently, ImGuizmo is not supported in the `libigl-imgui` package.
+- Dear ImGui for `libigl-imgui` is compiled without `IMGUI_IMPL_OPENGL_LOADER_GLAD` and `IMGUI_DISABLE_OBSOLETE_FUNCTIONS` in contrast to the upstream build system. It does not seem to make a difference. See: `/upstream/libigl/cmake/recipes/external/imgui.cmake`
+- `libigl-imgui` is not installable. The original module uses strange include paths for ImGui backends and its fonts. These paths are currently fixed by wrapper headers in the root of the package. But these headers should not be installed as they would pollute the global include folder.
+    
+### Tutorials
+- As we currently do not support all modules, there are also tutorial entries that are not built by default as this would lead to compile errors. See: `libigl-tutorials/buildfile`
+- The building of the tutorials in header-only mode is quite intensive and requires a lot of memory and time. The process will be aborted and probably fail when insufficient memory is encountered. Try to reduce the amount of jobs running by using something like `b -j 4`.
+- Tutorials `104`, `701`, and `704` seem to not work correctly. Building these tutorials with the upstream CMake-based system works.
+- For MSVC on Windows, everything including libigl should be compiled with `/bigobj`.
 
 ## Contributing
-Thanks in advance for your help and contribution to keep this package up-to-date.
+Thanks in advance for your help and contribution to keep this project up-to-date.
 For now, please, file an issue on [GitHub](https://github.com/build2-packaging/libigl/issues) for everything that is not described below.
 
 ### Recommend Updating Version
@@ -103,7 +109,7 @@ Please, file an issue on [GitHub](https://github.com/build2-packaging/libigl/iss
 ### Update Version by Pull Request
 1. Fork the repository on [GitHub](https://github.com/build2-packaging/libigl) and clone it to your local machine.
 2. Run `git submodule init` and `git submodule update` to get the current upstream directory.
-3. Inside the `upstream` directory, checkout the new library version `X.Y.Z` by calling `git checkout vX.Y.Z` that you want to be packaged. Here, it is probably not a version but the newest commit from the master branch instead.
+3. Inside the `upstream/libigl` directory, checkout the new library version `X.Y.Z` by calling `git checkout vX.Y.Z` that you want to be packaged. Here, it is probably not a version but the newest commit from the master branch instead.
 4. If needed, change source files, `buildfiles`, and symbolic links accordingly to create a working build2 package. Make sure not to directly depend on the upstream directory inside the build system but use symbolic links instead.
 5. Update library version in `manifest` file if it has changed or add package update by using `+n` for the `n`-th update.
 6. Make an appropriate commit message by using imperative mood and a capital letter at the start and push the new commit to the `master` branch.
@@ -112,7 +118,7 @@ Please, file an issue on [GitHub](https://github.com/build2-packaging/libigl/iss
 9. After a successful pull request, we will run the appropriate commands to publish a new package version.
 
 ### Update Version Directly if You Have Permissions
-1. Inside the `upstream` directory, checkout the new library version `X.Y.Z` by calling `git checkout vX.Y.Z` that you want to be packaged. Here, it is probably not a version but the newest commit from the master branch instead.
+1. Inside the `upstream/libigl` directory, checkout the new library version `X.Y.Z` by calling `git checkout vX.Y.Z` that you want to be packaged. Here, it is probably not a version but the newest commit from the master branch instead.
 2. If needed, change source files, `buildfiles`, and symbolic links accordingly to create a working build2 package. Make sure not to directly depend on the upstream directory inside the build system but use symbolic links instead.
 3. Update library version in `manifest` file if it has changed or add package update by using `+n` for the `n`-th update.
 4. Make an appropriate commit message by using imperative mood and a capital letter at the start and push the new commit to the `master` branch.
