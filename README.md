@@ -93,6 +93,31 @@ There are no configuration options available.
 ### `core` Module
 - For MSVC on Windows and for some source files, we need the `/bigobj` compile option. Currently, we apply it to all source files. This is probably overkill. Instead, we should figure out which of the source files need this option and adjust it in the precompiled static build and also the overall tests and tutorials.
 
+- Build Times and Memory Usage: Intel `i7-7700K` with `8` jobs, `16 GiB` memory, Arch Linux with GCC `13.2.1` and the use of `-O3 -march=native`:
+    + Header-Only Mode:
+        * Building the Tests:
+            - `~7.0 GiB`
+            - `~3 min 50 s`
+    + Precompiled Mode:
+        * Building the Library:
+            - `~5 GiB`
+            - `~5 min 40 s`
+        * Building the Tests:
+            - `~3.2 GiB`
+            - `~1 min 30 s`
+- Build Times and Memory Usage: Intel `i9-13900K` with `32` jobs, `32 GiB` memory, Arch Linux with GCC `13.2.1` and the use of `-O3 -march=native`:
+    + Header-Only Mode:
+        * Building the Tests:
+            - `~20 GiB`
+            - `~50 s`
+    + Precompiled Mode:
+        * Building the Library:
+            - `~13 GiB`
+            - `~1 min 5 s`
+        * Building the Tests:
+            - `~12 GiB`
+            - `~20 s`
+
 ### `opengl` and `glad` Module
 - Currently, `libigl-opengl` is forced to use `libigl-glad` as OpenGL loader. For local workflows without installation, this is ok. We need to add the ability to change the loader library for global installation.
 - `libigl-glad` should not be installed. It needs the KHR platform header. There should be a configuration to disable its use.
@@ -107,6 +132,20 @@ There are no configuration options available.
 - As we currently do not support all modules, there are also tutorial entries that are not built by default as this would lead to compile errors. See: `libigl-tutorials/buildfile`
 - The building of the tutorials in header-only mode is quite intensive and requires a lot of memory and time. The process will be aborted and probably fail when insufficient memory is encountered. Try to reduce the amount of jobs running by using something like `b -j 4`. Because of this, the tutorials will not be used for CI tests.
 - Tutorials `104`, `701`, and `704` seem to not work correctly. Building these tutorials with the upstream CMake-based system works.
+
+- Build Times and Memory Usage: Intel `i9-13900K` with `32` jobs, `32 GiB` memory, Arch Linux with GCC `13.2.1`, and the use of `-O3 -march=native`:
+    + Header-Only Mode:
+        * Not buildable as memory is insufficient for job count.
+    + Precompiled:
+        * `~8 GiB`
+        * `~20 s`
+- Build Times and Memory Usage: Intel `i9-13900K` with `8` jobs, `32 GiB` memory, Arch Linux with GCC `13.2.1`, and the use of `-O3 -march=native`:
+    + Header-Only Mode:
+        * `~16 GiB`
+        * `~2 min 50 s`
+    + Precompiled:
+        * `~3 GiB`
+        * `~20 s`
 
 ## Contributing
 Thanks in advance for your help and contribution to keep this project up-to-date.
