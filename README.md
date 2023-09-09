@@ -44,6 +44,8 @@ Please note, precompiled versions are only exported as static libraries by the p
     import igl_core = libigl-core%lib{igl-core}
     import igl_core_compiled = libigl-core%liba{igl-core-compiled}
 
+- For MSVC on Windows, everything including the header-only `libigl` core library should be compiled with the `/bigobj` compile option. For the precompiled static library, this is not required.
+
 **`opengl` Module:**
 
     import igl_opengl = libigl-opengl%lib{igl-opengl}
@@ -83,21 +85,28 @@ There are no configuration options available.
 - For easier inclusion of source files, several directory symlinks to `include/igl` are used.
 - Unit tests are not provided for all modules of libigl. For such cases, only basic inclusion tests are used.
 - For now, there is no stub package `libigl` that allows you to include all other modules at once by using `import igl = libigl%lib{igl}`. It is likely that it wouldn't be used that much.
+- The generated `pkg-config` files for installation seem weird as preprocess options are missing and too many libraries are stated as link targets. Take a look into it, again.
+
+### Precompiled Static Libraries
+- All precompiled static libraries use the suffix `-compiled` in their name. The suffix `-precompiled` seems not to be fitting as the library itself is provided in its compiled form. Also, it is longer. Using the approach to instead add the suffix `-binless` to header-only libraries, was tempting. But `libigl` mainly advertises itself as header-only library with the additional option to be used in compiled form. So, it was more consistent the other way around.
+
+### `core` Module
+- For MSVC on Windows and for some source files, we need the `/bigobj` compile option. Currently, we apply it to all source files. This is probably overkill. Instead, we should figure out which of the source files need this option and adjust it in the precompiled static build and also the overall tests and tutorials.
 
 ### `opengl` and `glad` Module
-- Currently, `libigl-glfw` is forced to use `libigl-glad` as OpenGL loader. For local workflows without installation, this is ok. We need to add the ability to change the loader library for global installation.
+- Currently, `libigl-opengl` is forced to use `libigl-glad` as OpenGL loader. For local workflows without installation, this is ok. We need to add the ability to change the loader library for global installation.
 - `libigl-glad` should not be installed. It needs the KHR platform header. There should be a configuration to disable its use.
 
 ### `imgui` Module
+- This module seems to be broken as even tutorials in header-only mode depending on it do not to work properly. In its precompiled version, it is not usable at all.
 - Currently, ImGuizmo is not supported in the `libigl-imgui` package.
 - Dear ImGui for `libigl-imgui` is compiled without `IMGUI_IMPL_OPENGL_LOADER_GLAD` and `IMGUI_DISABLE_OBSOLETE_FUNCTIONS` in contrast to the upstream build system. It does not seem to make a difference. See: `/upstream/libigl/cmake/recipes/external/imgui.cmake`
 - `libigl-imgui` is not installable. The original module uses strange include paths for ImGui backends and its fonts. These paths are currently fixed by wrapper headers in the root of the package. But these headers should not be installed as they would pollute the global include folder.
     
 ### Tutorials
 - As we currently do not support all modules, there are also tutorial entries that are not built by default as this would lead to compile errors. See: `libigl-tutorials/buildfile`
-- The building of the tutorials in header-only mode is quite intensive and requires a lot of memory and time. The process will be aborted and probably fail when insufficient memory is encountered. Try to reduce the amount of jobs running by using something like `b -j 4`.
+- The building of the tutorials in header-only mode is quite intensive and requires a lot of memory and time. The process will be aborted and probably fail when insufficient memory is encountered. Try to reduce the amount of jobs running by using something like `b -j 4`. Because of this, the tutorials will not be used for CI tests.
 - Tutorials `104`, `701`, and `704` seem to not work correctly. Building these tutorials with the upstream CMake-based system works.
-- For MSVC on Windows, everything including libigl should be compiled with `/bigobj`.
 
 ## Contributing
 Thanks in advance for your help and contribution to keep this project up-to-date.
