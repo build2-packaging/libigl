@@ -1,26 +1,11 @@
-<h1 align="center">
-    build2 Packages for Modules of libigl
-</h1>
+# build2 Packages for libigl Modules
 
-<p align="center">
-    This project builds and defines the build2 packages for Modules of <a href="https://github.com/libigl/libigl">libigl</a>.
-    libigl is a simple C++ geometry processing library.
-</p>
+[`libigl`](https://github.com/libigl/libigl) is a simple C++ geometry processing library separated into multiple modules that can be used either as header-only or as precompiled version. 
 
-<p align="center">
-    <a href="https://github.com/libigl/libigl">
-        <img src="https://img.shields.io/website/https/github.com/libigl/libigl.svg?down_message=offline&label=Official&style=for-the-badge&up_color=blue&up_message=online">
-    </a>
-    <a href="https://github.com/build2-packaging/libigl">
-        <img src="https://img.shields.io/website/https/github.com/build2-packaging/libigl.svg?down_message=offline&label=build2&style=for-the-badge&up_color=blue&up_message=online">
-    </a>
-    <a href="https://cppget.org/libigl-core">
-        <img src="https://img.shields.io/website/https/cppget.org/libigl-core.svg?down_message=offline&label=cppget.org&style=for-the-badge&up_color=blue&up_message=online">
-    </a>
-    <a href="https://queue.cppget.org/libigl-core">
-        <img src="https://img.shields.io/website/https/queue.cppget.org/libigl-core.svg?down_message=empty&down_color=blue&label=queue.cppget.org&style=for-the-badge&up_color=orange&up_message=running">
-    </a>
-</p>
+[![Official](https://img.shields.io/website/https/github.com/libigl/libigl.svg?down_message=offline&label=Official&style=for-the-badge&up_color=blue&up_message=online)](https://github.com/libigl/libigl)
+[![build2](https://img.shields.io/website/https/github.com/build2-packaging/libigl.svg?down_message=offline&label=build2&style=for-the-badge&up_color=blue&up_message=online)](https://github.com/build2-packaging/libigl)
+[![cppget.org](https://img.shields.io/website/https/cppget.org/libigl-core.svg?down_message=offline&label=cppget.org&style=for-the-badge&up_color=blue&up_message=online)](https://cppget.org/libigl-core)
+[![queue.cppget.org](https://img.shields.io/website/https/queue.cppget.org/libigl-core.svg?down_message=empty&down_color=blue&label=queue.cppget.org&style=for-the-badge&up_color=orange&up_message=running)](https://queue.cppget.org/libigl-core)
 
 ## Usage
 Add the alpha section of the `cppget.org` repository to your project's `repositories.manifest` to be able to fetch the packages of all provided libigl modules.
