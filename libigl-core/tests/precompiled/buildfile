@@ -1,8 +1,0 @@
-# The 'main.cpp' is symbolic link to '../main.cpp'.
-# This needs to be done as two different
-# object files with the same name will be created.
-#
-# On the other hand, the 'testscript' can be reused directly.
-#
-import lib = libigl-core%liba{igl-core-compiled}
-exe{tests}: {hxx cxx}{*} $lib ../testscript

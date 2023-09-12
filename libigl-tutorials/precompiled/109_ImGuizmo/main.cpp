@@ -1,1 +1,0 @@
-../../../upstream/libigl/tutorial/109_ImGuizmo/main.cpp

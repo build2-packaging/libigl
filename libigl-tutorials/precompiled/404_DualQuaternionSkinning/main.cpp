@@ -1,1 +1,0 @@
-../../../upstream/libigl/tutorial/404_DualQuaternionSkinning/main.cpp

@@ -1,1 +1,0 @@
-../../../upstream/libigl/tutorial/704_SignedDistance/main.cpp

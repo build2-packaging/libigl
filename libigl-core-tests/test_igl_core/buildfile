@@ -1,0 +1,18 @@
+# Dependencies
+#
+import libs = catch2%lib{catch2}
+import libs += libigl-core%lib{igl-core}
+
+# The test executable must be named like this.
+# Otherwise, one of the unit tests will fail.
+#
+exe{test_igl_core}: {hxx cxx}{*} igl/{hxx cxx}{*} $libs testscript
+
+# Build Options
+#
+cxx.poptions =+ "-I$src_base"
+cxx.poptions += -DLIBIGL_DATA_DIR="\"$regex.replace($src_root, '\\', '\\\\')/data\""
+cxx.poptions += -DCATCH_CONFIG_ENABLE_BENCHMARKING
+if ($cxx.target.system == 'win32-msvc')
+  cxx.coptions += /bigobj
+

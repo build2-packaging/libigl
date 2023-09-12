@@ -1,1 +1,0 @@
-../../../upstream/libigl/tutorial/408_DirectDeltaMush/main.cpp

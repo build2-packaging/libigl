@@ -1,26 +1,14 @@
 # Dependencies
 #
 import glad = libigl-glad%lib{igl-glad}
+import igl_core = libigl-core%lib{igl-core}
 
 # Header-Only Library
 #
-import igl_core = libigl-core%lib{igl-core}
 ./: lib{igl-opengl}: igl/opengl/{hxx ixx}{*} $glad $igl_core
 {
   cxx.export.poptions = "-I$src_root"
   cxx.export.libs = $glad $igl_core
-}
-
-# Precompiled Static Library
-#
-# The dependency 'liba{igl-core-compiled}'
-# already exports the macro 'IGL_STATIC_LIBRARY'.
-#
-import igl_core_compiled = libigl-core%liba{igl-core-compiled}
-./: liba{igl-opengl-compiled}: igl/opengl/{hxx cxx}{*} $glad $igl_core_compiled
-{
-  cxx.export.poptions = "-I$src_root"
-  cxx.export.libs = $glad $igl_core_compiled
 }
 
 # Build Options
@@ -32,9 +20,9 @@ cxx.poptions =+ "-I$src_root"
 # for details on the version.* variable values.
 #
 if $version.pre_release
-  liba{igl-opengl-compiled}: bin.lib.version = "-$version.project_id"
+  liba{igl-opengl}: bin.lib.version = "-$version.project_id"
 else
-  liba{igl-opengl-compiled}: bin.lib.version = "-$version.major.$version.minor"
+  liba{igl-opengl}: bin.lib.version = "-$version.major.$version.minor"
 
 # Mark header and inclusion files as to be installed.
 # Inclusion files are only installed when depending on lib{igl-core}.

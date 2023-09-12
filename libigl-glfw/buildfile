@@ -1,26 +1,14 @@
 # Dependencies
 #
 import glfw = glfw%lib{glfw}
+import igl_opengl = libigl-opengl%lib{igl-opengl}
 
 # Header-Only Library
 #
-import igl_opengl = libigl-opengl%lib{igl-opengl}
 ./: lib{igl-glfw}: igl/opengl/glfw/{hxx ixx}{*} $glfw $igl_opengl
 {
   cxx.export.poptions = "-I$src_root"
   cxx.export.libs = $glfw $igl_opengl
-}
-
-# Precompiled Static Library
-#
-# The dependency 'liba{igl-core-compiled}'
-# already exports the macro 'IGL_STATIC_LIBRARY'.
-#
-import igl_opengl_compiled = libigl-opengl%liba{igl-opengl-compiled}
-./: liba{igl-glfw-compiled}: igl/opengl/glfw/{hxx cxx}{*} $glfw $igl_opengl_compiled
-{
-  cxx.export.poptions = "-I$src_root"
-  cxx.export.libs = $glfw $igl_opengl_compiled
 }
 
 # Build Options
@@ -32,9 +20,9 @@ cxx.poptions =+ "-I$src_root"
 # for details on the version.* variable values.
 #
 if $version.pre_release
-  liba{igl-glfw-compiled}: bin.lib.version = "-$version.project_id"
+  liba{igl-glfw}: bin.lib.version = "-$version.project_id"
 else
-  liba{igl-glfw-compiled}: bin.lib.version = "-$version.major.$version.minor"
+  liba{igl-glfw}: bin.lib.version = "-$version.major.$version.minor"
 
 # Mark header and inclusion files as to be installed.
 # Inclusion files are only installed when depending on lib{igl-core}.

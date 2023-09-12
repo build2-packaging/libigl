@@ -1,1 +1,0 @@
-../../../upstream/libigl/tutorial/303_LaplaceEquation/main.cpp

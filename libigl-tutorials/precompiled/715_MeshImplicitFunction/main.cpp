@@ -1,1 +1,0 @@
-../../../upstream/libigl/tutorial/715_MeshImplicitFunction/main.cpp

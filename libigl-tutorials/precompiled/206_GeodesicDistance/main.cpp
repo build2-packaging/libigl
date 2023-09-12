@@ -1,1 +1,0 @@
-../../../upstream/libigl/tutorial/206_GeodesicDistance/main.cpp

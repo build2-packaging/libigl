@@ -1,1 +1,0 @@
-../../../upstream/libigl/tutorial/606_AmbientOcclusion/main.cpp

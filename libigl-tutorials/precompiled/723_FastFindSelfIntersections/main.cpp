@@ -1,1 +1,0 @@
-../../../upstream/libigl/tutorial/723_FastFindSelfIntersections/main.cpp

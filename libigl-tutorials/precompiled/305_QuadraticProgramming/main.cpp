@@ -1,1 +1,0 @@
-../../../upstream/libigl/tutorial/305_QuadraticProgramming/main.cpp

@@ -1,1 +1,0 @@
-../../../upstream/libigl/tutorial/703_Decimation/main.cpp

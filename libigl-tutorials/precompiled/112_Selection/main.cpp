@@ -1,1 +1,0 @@
-../../../upstream/libigl/tutorial/112_Selection/main.cpp

@@ -1,5 +1,4 @@
 ./: manifest legal{LICENSE*} doc{*.md} data/file{**}
-./: precompiled/
 
 # Currently, not all modules of libigl are supported.
 # So, not all tutorials can be build.

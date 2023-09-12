@@ -1,2 +1,0 @@
-import lib = libigl-opengl%liba{igl-opengl-compiled}
-exe{tests}: {hxx cxx}{*} $lib

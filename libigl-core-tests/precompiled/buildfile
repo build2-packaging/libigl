@@ -1,6 +1,0 @@
-import libs += libigl-core%liba{igl-core-compiled}
-
-# The test executable must be named like this.
-# Otherwise, one of the unit tests will fail.
-#
-exe{test_igl_core}: ../hxx{test_common} {hxx cxx}{*} igl/{hxx cxx}{*} $libs ../testscript

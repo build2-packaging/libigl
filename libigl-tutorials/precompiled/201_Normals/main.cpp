@@ -1,1 +1,0 @@
-../../../upstream/libigl/tutorial/201_Normals/main.cpp

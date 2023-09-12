@@ -1,1 +1,0 @@
-../../../upstream/libigl/tutorial/702_WindingNumber/main.cpp

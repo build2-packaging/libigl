@@ -2,7 +2,7 @@
 #
 import libs = Eigen%lib{Eigen}
 
-# Header-Only Library
+# Library
 #
 ./: lib{igl-core}: igl/{hxx ixx}{*} igl/hxx{*.hpp} igl/ixx{raytri.c} $libs
 {
@@ -10,29 +10,19 @@ import libs = Eigen%lib{Eigen}
   cxx.export.libs = $libs
 }
 
-# Precompiled Static Library
-#
-./: liba{igl-core-compiled}: igl/{hxx cxx}{*} igl/hxx{*.hpp} igl/cxx{raytri.c} $libs
-{
-  cxx.export.poptions = "-I$src_root" -DIGL_STATIC_LIBRARY
-  cxx.export.libs = $libs
-}
-
 # Build and Export Options
 #
 cxx.poptions =+ "-I$src_root"
-obja{*}: cxx.poptions += -DIGL_STATIC_LIBRARY
+# obja{*}: cxx.poptions += -DIGL_STATIC_LIBRARY
 
 if ($cxx.target.system != 'win32-msvc')
 {
   lib{igl-core}: cxx.export.libs += -pthread
-  liba{igl-core-compiled}: cxx.export.libs += -pthread
   cxx.libs += -pthread
 }
 else
 {
   lib{igl-core}: cxx.export.poptions += -DNOMINMAX
-  liba{igl-core-compiled}: cxx.export.poptions += -DNOMINMAX
   cxx.poptions += -DNOMINMAX
   cxx.coptions += /bigobj
 }
@@ -42,9 +32,9 @@ else
 # for details on the version.* variable values.
 #
 if $version.pre_release
-  liba{igl-core-compiled}: bin.lib.version = "-$version.project_id"
+  liba{igl-core}: bin.lib.version = "-$version.project_id"
 else
-  liba{igl-core-compiled}: bin.lib.version = "-$version.major.$version.minor"
+  liba{igl-core}: bin.lib.version = "-$version.major.$version.minor"
 
 # Mark header and inclusion files as to be installed.
 # Inclusion files are only installed when depending on lib{igl-core}.

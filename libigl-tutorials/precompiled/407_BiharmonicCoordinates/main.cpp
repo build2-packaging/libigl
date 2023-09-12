@@ -1,1 +1,0 @@
-../../../upstream/libigl/tutorial/407_BiharmonicCoordinates/main.cpp

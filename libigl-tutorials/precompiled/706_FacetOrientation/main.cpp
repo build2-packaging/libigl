@@ -1,1 +1,0 @@
-../../../upstream/libigl/tutorial/706_FacetOrientation/main.cpp

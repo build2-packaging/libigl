@@ -1,2 +1,0 @@
-import lib = libigl-glfw%liba{igl-glfw-compiled}
-exe{tests}: {hxx cxx}{*} $lib

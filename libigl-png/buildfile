@@ -2,30 +2,21 @@
 #
 import libs = stb_image%lib{stb_image}
 import libs += stb_image_write%lib{stb_image_write}
+import igl_opengl = libigl-opengl%lib{igl-opengl}
 
 # Utility Library for the stb Implementations
 #
 libul{stb}: cxx{*} $libs
 
-# Header-Only Library
+# Library Sources
 #
 # This library is not binless
 # as the stb libary implementations are included in 'stb_image.cpp'.
 #
-import igl_opengl = libigl-opengl%lib{igl-opengl}
 ./: lib{igl-png}: igl/png/{hxx ixx}{*} libul{stb} $igl_opengl
 {
   cxx.export.poptions = "-I$src_root"
   cxx.export.libs = $libs $igl_opengl
-}
-
-# Precompiled Static Library
-#
-import igl_opengl_compiled = libigl-opengl%liba{igl-opengl-compiled}
-./: liba{igl-png-compiled}: igl/png/{hxx cxx}{*} libul{stb} $igl_opengl_compiled
-{
-  cxx.export.poptions = "-I$src_root"
-  cxx.export.libs = $igl_opengl_compiled
 }
 
 # Build Options
@@ -37,9 +28,9 @@ cxx.poptions =+ "-I$src_root"
 # for details on the version.* variable values.
 #
 if $version.pre_release
-  liba{igl-png-compiled}: bin.lib.version = "-$version.project_id"
+  liba{igl-png}: bin.lib.version = "-$version.project_id"
 else
-  liba{igl-png-compiled}: bin.lib.version = "-$version.major.$version.minor"
+  liba{igl-png}: bin.lib.version = "-$version.major.$version.minor"
 
 # Mark header and inclusion files as to be installed.
 # Inclusion files are only installed when depending on lib{igl-core}.

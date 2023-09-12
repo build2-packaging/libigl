@@ -1,1 +1,0 @@
-../../../upstream/libigl/tutorial/602_Matlab/main.cpp

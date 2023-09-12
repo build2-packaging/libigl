@@ -1,2 +1,0 @@
-import lib = libigl-png%liba{igl-png-compiled}
-exe{tests}: {hxx cxx}{*} $lib
