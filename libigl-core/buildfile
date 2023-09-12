@@ -1,28 +1,55 @@
+# Default Targets and Package Files
+#
+./: liba{igl-core} manifest legal{LICENSE*} doc{*.md}
+./: tests/: install = false
+
 # Dependencies
 #
 import libs = Eigen%lib{Eigen}
-
-# Library
 #
-./: lib{igl-core}: igl/{hxx ixx}{*} igl/hxx{*.hpp} igl/ixx{raytri.c} $libs
+liba{igl-core}: $libs
+liba{igl-core}: cxx.export.libs = $libs
+#
+if ($cxx.target.system != 'win32-msvc')
 {
-  cxx.export.poptions = "-I$src_root"
-  cxx.export.libs = $libs
+  liba{igl-core}: cxx.export.libs += -pthread
+  cxx.libs += -pthread
 }
+
+# Headers
+#
+liba{igl-core}: igl/hxx{* *.hpp}
+
+# Sources
+#
+#
+#
+{ixx cxx}{*}: dist = false
+#
+#
+#
+src_files = igl/{*.cpp *.c}
+./: file{$src_files}
+#
+#
+#
+liba{igl-core}: cxx{$src_files}: include = $config.libigl_core.precompiled
+liba{igl-core}: ixx{$src_files}: include = (!$config.libigl_core.precompiled)
 
 # Build and Export Options
 #
+liba{igl-core}: cxx.export.poptions = "-I$src_root"
 cxx.poptions =+ "-I$src_root"
-# obja{*}: cxx.poptions += -DIGL_STATIC_LIBRARY
 
-if ($cxx.target.system != 'win32-msvc')
+if ($config.libigl_core.precompiled)
 {
-  lib{igl-core}: cxx.export.libs += -pthread
-  cxx.libs += -pthread
+  liba{igl-core}: cxx.export.poptions += -DIGL_STATIC_LIBRARY
+  cxx.poptions += -DIGL_STATIC_LIBRARY
 }
-else
+
+if ($cxx.target.system == 'win32-msvc')
 {
-  lib{igl-core}: cxx.export.poptions += -DNOMINMAX
+  liba{igl-core}: cxx.export.poptions += -DNOMINMAX
   cxx.poptions += -DNOMINMAX
   cxx.coptions += /bigobj
 }
@@ -36,10 +63,15 @@ if $version.pre_release
 else
   liba{igl-core}: bin.lib.version = "-$version.major.$version.minor"
 
+# Library Metadata
+#
+liba{igl-core}:
+{
+  export.metadata = 1 libigl_core
+  libigl_core.precompiled = [bool] $config.libigl_core.precompiled
+}
+
 # Mark header and inclusion files as to be installed.
-# Inclusion files are only installed when depending on lib{igl-core}.
+# Inclusion files are only installed when no precompilation is used.
 #
 {hxx ixx}{*}: install = include/igl/
-
-./: manifest legal{LICENSE*} doc{*.md}
-./: tests/: install = false

@@ -1,4 +1,4 @@
-import igl = libigl-core%lib{igl-core}
+import igl = libigl-core%liba{igl-core}
 ./: exe{tests}: {hxx cxx}{*} $igl testscript
 
 ./: file{cube.off}

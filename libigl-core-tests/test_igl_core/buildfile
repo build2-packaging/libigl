@@ -1,7 +1,7 @@
 # Dependencies
 #
 import libs = catch2%lib{catch2}
-import libs += libigl-core%lib{igl-core}
+import libs += libigl-core%liba{igl-core}
 
 # The test executable must be named like this.
 # Otherwise, one of the unit tests will fail.

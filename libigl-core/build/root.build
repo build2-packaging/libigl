@@ -1,3 +1,5 @@
+config [bool] config.libigl_core.precompiled ?= false
+
 cxx.std = latest
 
 using cxx
