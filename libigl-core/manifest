@@ -35,3 +35,5 @@ Eigen ^3.4.0
 \
 
 tests: libigl-core-tests == $
+
+precompiled-build-config: config.libigl_core.precompiled=true
