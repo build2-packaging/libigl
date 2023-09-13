@@ -1,18 +1,32 @@
+# Default Targets and Package Files
+#
+./: liba{igl-opengl} manifest legal{LICENSE*} doc{*.md}
+./: tests/: install = false
+
+# Headers
+#
+liba{igl-opengl}: igl/opengl/hxx{* *.hpp}
+
+# Sources
+#
+{ixx cxx}{*}: dist = false
+src_files = igl/opengl/{*.cpp *.c}
+./: file{$src_files}
+#
+liba{igl-opengl}: cxx{$src_files}: include = $config.libigl_opengl.precompiled
+liba{igl-opengl}: ixx{$src_files}: include = (!$config.libigl_opengl.precompiled)
+
 # Dependencies
 #
-import glad = libigl-glad%lib{igl-glad}
-import igl_core = libigl-core%lib{igl-core}
-
-# Header-Only Library
+import libs = libigl-core%liba{igl-core}
+import libs += libigl-glad%liba{igl-glad}
 #
-./: lib{igl-opengl}: igl/opengl/{hxx ixx}{*} $glad $igl_core
-{
-  cxx.export.poptions = "-I$src_root"
-  cxx.export.libs = $glad $igl_core
-}
+liba{igl-opengl}: $libs
+liba{igl-opengl}: cxx.export.libs = $libs
 
-# Build Options
+# Build and Export Options
 #
+liba{igl-opengl}: cxx.export.poptions = "-I$src_root"
 cxx.poptions =+ "-I$src_root"
 
 # For pre-releases use the complete version to make sure they cannot be used
@@ -24,10 +38,15 @@ if $version.pre_release
 else
   liba{igl-opengl}: bin.lib.version = "-$version.major.$version.minor"
 
+# Library Metadata
+#
+liba{igl-opengl}:
+{
+  export.metadata = 1 libigl_opengl
+  libigl_opengl.precompiled = [bool] $config.libigl_opengl.precompiled
+}
+
 # Mark header and inclusion files as to be installed.
-# Inclusion files are only installed when depending on lib{igl-core}.
+# Inclusion files are only installed when no precompilation is used.
 #
 {hxx ixx}{*}: install = include/igl/opengl/
-
-./: manifest legal{LICENSE*} doc{*.md}
-./: tests/: install = false

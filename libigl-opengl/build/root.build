@@ -1,6 +1,6 @@
-# Uncomment to suppress warnings coming from external libraries.
+# Decide whether library should be precompiled.
 #
-cxx.internal.scope = current
+config [bool] config.libigl_opengl.precompiled ?= false
 
 cxx.std = latest
 
