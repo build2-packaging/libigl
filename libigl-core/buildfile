@@ -75,8 +75,8 @@ if ($config.libigl_core.precompiled)
 #
 if ($cxx.target.class == 'windows')
 {
-  liba{igl-core}: cxx.export.poptions += -DNOMINMAX
-  cxx.poptions += -DNOMINMAX
+  liba{igl-core}: cxx.export.poptions += -DWIN32 -DNOMINMAX
+  cxx.poptions += -DWIN32 -DNOMINMAX
 }
 #
 if ($cxx.id == 'msvc')
