@@ -1,20 +1,36 @@
+# Immediately import the package's library with its metadata
+# to be able to check whether it has been precompiled.
+#
+import! [metadata, rule_hint=cxx.link] igl = libigl-core%liba{igl-core}
+precompiled = [bool] $($igl: libigl_core.precompiled)
+
 # Dependencies
 #
 import catch = catch2%lib{catch2}
-import! [metadata, rule_hint=cxx.link] igl = libigl-core%liba{igl-core}
 
+# Test Executable
+#
 # The test executable must be named like this.
 # Otherwise, one of the unit tests will fail.
 #
-exe{test_igl_core}: {hxx cxx}{*} igl/{hxx cxx}{*} $catch $igl testscript
+exe{test_igl_core}: {hxx cxx}{*} $catch testscript
+#
+# Include all unit tests source except `igl/delaunay_triangulation.cpp`.
+# This source explicitly disables `IGL_STATIC_LIBRARY`
+# and, thus, does not allow for precompiled builds.
+# Instead, include it conditionally for header-only builds.
+#
+# The static library dependency must be stated after the sources.
+# Otherwise, there will be a ton of undefined references to the implementation.
+#
+exe{test_igl_core}: igl/cxx{* -delaunay_triangulation} $igl
+exe{test_igl_core}: igl/cxx{delaunay_triangulation}: include = (!$precompiled)
 
 # Build Options
 #
-cxx.poptions =+ "-I$src_base"
-cxx.poptions += -DLIBIGL_DATA_DIR="\"$regex.replace($src_root, '\\', '\\\\')/data\""
+cxx.poptions += "-I$src_base"
+cxx.poptions += -DLIBIGL_DATA_DIR="\"$regex.replace($src_root, '\\', '\\\\')data\""
 cxx.poptions += -DCATCH_CONFIG_ENABLE_BENCHMARKING
-
-precompiled = [bool] $($igl: libigl_core.precompiled)
 
 if (!$precompiled)
 {
