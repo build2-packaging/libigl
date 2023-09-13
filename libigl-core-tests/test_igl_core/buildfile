@@ -34,7 +34,7 @@ cxx.poptions += -DCATCH_CONFIG_ENABLE_BENCHMARKING
 
 if (!$precompiled)
 {
-  if ($cxx.target.system == 'win32-msvc')
+  if ($cxx.id == 'msvc')
     cxx.coptions += /bigobj
 }
 
