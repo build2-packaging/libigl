@@ -25,10 +25,11 @@ depends:
 \
 libigl-core == $
 {
-  require
+  prefer
   {
     config.libigl_core.precompiled = $config.libigl_opengl.precompiled
   }
+  accept ($config.libigl_core.precompiled == $config.libigl_opengl.precompiled)
 }
 \
 
