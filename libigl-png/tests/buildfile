@@ -1,2 +1,2 @@
-import lib = libigl-png%lib{igl-png}
+import lib = libigl-png%liba{igl-png}
 exe{tests}: {hxx cxx}{*} $lib

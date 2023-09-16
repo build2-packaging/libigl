@@ -1,26 +1,43 @@
+# Default Targets and Package Files
+#
+./: liba{igl-png} manifest legal{LICENSE*} doc{*.md}
+./: tests/: install = false
+
+# Imports
+#
+# Make sure the build is consistently setting precompilation
+# by reading the metadata from the libigl module dependency.
+#
+import! [metadata, rule_hint=cxx.link] igl = libigl-opengl%liba{igl-opengl}
+precompiled = [bool] $($igl: libigl_opengl.precompiled)
+#
+libs = $igl
+import libs += stb_image%lib{stb_image}
+import libs += stb_image_write%lib{stb_image_write}
+
+# Headers
+#
+liba{igl-png}: igl/png/hxx{*}
+
+# Sources
+#
+{ixx cxx}{*}: dist = false
+src_files = igl/png/{*.cpp}
+./: file{$src_files}
+cxx{stb_image}@./: dist = true
+#
+liba{igl-png}: cxx{*}
+liba{igl-png}: cxx{$src_files}: include = $precompiled
+liba{igl-png}: ixx{$src_files}: include = (!$precompiled)
+
 # Dependencies
 #
-import libs = stb_image%lib{stb_image}
-import libs += stb_image_write%lib{stb_image_write}
-import igl_opengl = libigl-opengl%lib{igl-opengl}
+liba{igl-png}: $libs
+liba{igl-png}: cxx.export.libs = $libs
 
-# Utility Library for the stb Implementations
+# Build and Export Options
 #
-libul{stb}: cxx{*} $libs
-
-# Library Sources
-#
-# This library is not binless
-# as the stb libary implementations are included in 'stb_image.cpp'.
-#
-./: lib{igl-png}: igl/png/{hxx ixx}{*} libul{stb} $igl_opengl
-{
-  cxx.export.poptions = "-I$src_root"
-  cxx.export.libs = $libs $igl_opengl
-}
-
-# Build Options
-#
+liba{igl-png}: cxx.export.poptions = "-I$src_root"
 cxx.poptions =+ "-I$src_root"
 
 # For pre-releases use the complete version to make sure they cannot be used
@@ -32,10 +49,15 @@ if $version.pre_release
 else
   liba{igl-png}: bin.lib.version = "-$version.major.$version.minor"
 
+# Library Metadata
+#
+liba{igl-png}:
+{
+  export.metadata = 1 libigl_png
+  libigl_png.precompiled = [bool] $precompiled
+}
+
 # Mark header and inclusion files as to be installed.
-# Inclusion files are only installed when depending on lib{igl-core}.
+# Inclusion files are only installed when no precompilation is used.
 #
 {hxx ixx}{*}: install = include/igl/png/
-
-./: manifest legal{LICENSE*} doc{*.md}
-./: tests/: install = false
