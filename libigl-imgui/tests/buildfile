@@ -1,2 +1,2 @@
-import lib = libigl-imgui%lib{igl-imgui}
+import lib = libigl-imgui%liba{igl-imgui}
 exe{tests}: {hxx cxx}{**} $lib

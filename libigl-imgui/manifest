@@ -21,6 +21,23 @@ package-email: packaging@build2.org
 depends: * build2 >= 0.16.0
 depends: * bpkg >= 0.16.0
 
-depends: libigl-glfw == $
+depends:
+\
+libigl-glfw == $
+{
+  # If the precompilation of this package has been configured,
+  # the dependency is required to use the same compilation mode.
+  #
+  prefer
+  {
+    if ($config.origin(config.libigl_imgui.precompiled) != 'undefined')
+      config.libigl_glfw.precompiled = $config.libigl_imgui.precompiled
+  }
+
+  accept (($config.origin(config.libigl_imgui.precompiled) == 'undefined') \
+          || ($config.libigl_glfw.precompiled == $config.libigl_imgui.precompiled))
+}
+\
+
 depends: libimgui-platform-glfw ^1.85.0
 depends: libimgui-render-opengl3 ^1.85.0

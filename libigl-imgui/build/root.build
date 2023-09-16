@@ -1,6 +1,12 @@
-# Uncomment to suppress warnings coming from external libraries.
+# Decide, whether the library should be precompiled.
+# This value is 'undefined' on purpose
+# as the compilation mode will be decided
+# by the metadata of libigl module dependencies.
+# Setting it to 'true' or 'false' states an explicit requirement
+# that through this approach
+# will be traversed to all consumers and dependencies.
 #
-cxx.internal.scope = current
+config [bool] config.libigl_imgui.precompiled
 
 cxx.std = latest
 
