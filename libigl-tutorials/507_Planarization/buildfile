@@ -1,2 +1,2 @@
-import libs = libigl-glfw%lib{igl-glfw}
+import libs = libigl-glfw%liba{igl-glfw}
 exe{run}: {hxx cxx}{*} $libs

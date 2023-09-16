@@ -1,2 +1,2 @@
-import libs = libigl-core%lib{igl-core}
+import libs = libigl-core%liba{igl-core}
 exe{run}: {hxx cxx}{**} $libs
