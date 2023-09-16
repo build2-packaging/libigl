@@ -21,5 +21,22 @@ package-email: packaging@build2.org
 depends: * build2 >= 0.16.0
 depends: * bpkg >= 0.16.0
 
-depends: libigl-opengl == $
+depends:
+\
+libigl-opengl == $
+{
+  # If the precompilation of this package has been configured,
+  # the dependency is required to use the same compilation mode.
+  #
+  prefer
+  {
+    if ($config.origin(config.libigl_glfw.precompiled) != 'undefined')
+      config.libigl_opengl.precompiled = $config.libigl_glfw.precompiled
+  }
+
+  accept (($config.origin(config.libigl_glfw.precompiled) == 'undefined') \
+          || ($config.libigl_opengl.precompiled == $config.libigl_glfw.precompiled))
+}
+\
+
 depends: glfw ^3.3.8

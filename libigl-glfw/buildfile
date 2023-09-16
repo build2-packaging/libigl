@@ -1,18 +1,40 @@
+# Default Targets and Package Files
+#
+./: liba{igl-glfw} manifest legal{LICENSE*} doc{*.md}
+./: tests/: install = false
+
+# Imports
+#
+# Make sure the build is consistently setting precompilation
+# by reading the metadata from the libigl module dependency.
+#
+import! [metadata, rule_hint=cxx.link] igl = libigl-opengl%liba{igl-opengl}
+precompiled = [bool] $($igl: libigl_opengl.precompiled)
+#
+libs = $igl
+import libs += glfw%lib{glfw}
+
+# Headers
+#
+liba{igl-glfw}: igl/opengl/glfw/hxx{* *.hpp}
+
+# Sources
+#
+{ixx cxx}{*}: dist = false
+src_files = igl/opengl/glfw/{*.cpp *.c}
+./: file{$src_files}
+#
+liba{igl-glfw}: cxx{$src_files}: include = $precompiled
+liba{igl-glfw}: ixx{$src_files}: include = (!$precompiled)
+
 # Dependencies
 #
-import glfw = glfw%lib{glfw}
-import igl_opengl = libigl-opengl%lib{igl-opengl}
+liba{igl-glfw}: $libs
+liba{igl-glfw}: cxx.export.libs = $libs
 
-# Header-Only Library
+# Build and Export Options
 #
-./: lib{igl-glfw}: igl/opengl/glfw/{hxx ixx}{*} $glfw $igl_opengl
-{
-  cxx.export.poptions = "-I$src_root"
-  cxx.export.libs = $glfw $igl_opengl
-}
-
-# Build Options
-#
+liba{igl-glfw}: cxx.export.poptions = "-I$src_root"
 cxx.poptions =+ "-I$src_root"
 
 # For pre-releases use the complete version to make sure they cannot be used
@@ -24,10 +46,15 @@ if $version.pre_release
 else
   liba{igl-glfw}: bin.lib.version = "-$version.major.$version.minor"
 
+# Library Metadata
+#
+liba{igl-glfw}:
+{
+  export.metadata = 1 libigl_glfw
+  libigl_glfw.precompiled = [bool] $precompiled
+}
+
 # Mark header and inclusion files as to be installed.
 # Inclusion files are only installed when depending on lib{igl-core}.
 #
 {hxx ixx}{*}: install = include/igl/opengl/glfw/
-
-./: manifest legal{LICENSE*} doc{*.md}
-./: tests/: install = false

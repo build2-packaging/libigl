@@ -25,30 +25,17 @@ depends:
 \
 libigl-core == $
 {
+  # If the precompilation of this package has been configured,
+  # the dependency is required to use the same compilation mode.
+  #
   prefer
   {
-    # If precompilation of this dependency has not been configured by a consumer,
-    # let its value coincide with ours.
-    #
-    if ($config.origin(config.libigl_core.precompiled) == 'default')
+    if ($config.origin(config.libigl_opengl.precompiled) != 'undefined')
       config.libigl_core.precompiled = $config.libigl_opengl.precompiled
   }
 
-  # When using precompilation, both libraries need to be precompiled.
-  # If the precompiled mode is defaulted for this package,
-  # the dependency will update its value in the 'reflect' clause.
-  #
-  accept (($config.origin(config.libigl_opengl.precompiled) == 'default') \
+  accept (($config.origin(config.libigl_opengl.precompiled) == 'undefined') \
           || ($config.libigl_core.precompiled == $config.libigl_opengl.precompiled))
-
-  reflect
-  {
-    # If precompilation of this package has not been configured by a consumer,
-    # let the dependency itself set its value.
-    #
-    if ($config.origin(config.libigl_opengl.precompiled) == 'default')
-      config.libigl_opengl.precompiled = $config.libigl_core.precompiled
-  }
 }
 \
 
