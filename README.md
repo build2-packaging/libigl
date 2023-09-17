@@ -36,38 +36,39 @@ Add the respective dependency in your project's `manifest` file to make the requ
     depends: libigl-imgui ^2.5.0-
     depends: libigl-png ^2.5.0-
 
-The respective header-only and precompiled libraries can be imported by the following declarations in a `buildfile`.
-Please note, precompiled versions are only exported as static libraries by the packages.
+All the packages export only static libraries.
+These can be imported by the following declarations in a `buildfile`.
 
-**`core` Module:**
+    import igl = libigl-core%liba{igl-core}
+    import igl = libigl-opengl%liba{igl-opengl}
+    import igl = libigl-glfw%liba{igl-glfw}
+    import igl = libigl-imgui%liba{igl-imgui}
+    import igl = libigl-png%liba{igl-png}
 
-    import igl_core = libigl-core%lib{igl-core}
-    import igl_core_compiled = libigl-core%liba{igl-core-compiled}
+Furthermore, every library supports immediate importation to access its metadata for querying whether it has been precompiled.
 
-- For MSVC on Windows, everything including the header-only `libigl` core library should be compiled with the `/bigobj` compile option. For the precompiled static library, this is not required.
-
-**`opengl` Module:**
-
-    import igl_opengl = libigl-opengl%lib{igl-opengl}
-    import igl_opengl_compiled = libigl-opengl%liba{igl-opengl-compiled}
-
-**`glfw` Module:**
-
-    import igl_glfw = libigl-glfw%lib{igl-glfw}
-    import igl_glfw_compiled = libigl-glfw%liba{igl-glfw-compiled}
-
-**`imgui` Module:**
-
-    import igl_imgui = libigl-imgui%lib{igl-imgui}
-    import igl_imgui_compiled = libigl-imgui%liba{igl-imgui-compiled}
-
-**`png` Module:**
-
-    import igl_png = libigl-png%lib{igl-png}
-    import igl_png_compiled = libigl-png%liba{igl-png-compiled}
+    import! [metadata, rule_hint=cxx.link] igl = libigl-core%liba{igl-core}
+    precompiled = [bool] $($igl: libigl_core.precompiled)
 
 ## Configuration
-There are no configuration options available.
+### Precompilation
+
+    config [bool] config.libigl_core.precompiled ?= false
+    config [bool] config.libigl_opengl.precompiled
+    config [bool] config.libigl_glfw.precompiled
+    config [bool] config.libigl_imgui.precompiled
+    config [bool] config.libigl_png.precompiled
+
+`libigl` supports header-only and precompiled modes.
+The default is to use the header-only library.
+Either all modules need to be used in header-only mode or all modules need to be precompiled.
+Only `config.libigl_core.precompiled` from the `libigl-core` package decides this.
+All other configuration variables are `undefined` on purpose.
+As soon as specifying their value, the value will be traversed to dependent modules by dependency configuration negotiation.
+With this approach only for one package the value needs to be specified.
+If there are two specified inequal values, the negotiation will fail.
+
+Header-only mode should not be used for standard projects but only for small test builds.
 
 ## Issues and Notes
 - Previous definite versions of libigl, fail to compile for strange reasons. So, the up-to-date main branch is used as an upstream reference, for now. To get around problems concerning versioning, we use alpha releases. `libigl` does not use alpha or beta releases. Esspecially, not for the upcoming version `2.5.0`. So, it seems to be a valid solution to use alpha versions for snapshots in this build2 packaging attempt.
@@ -86,9 +87,6 @@ There are no configuration options available.
 - Unit tests are not provided for all modules of libigl. For such cases, only basic inclusion tests are used.
 - For now, there is no stub package `libigl` that allows you to include all other modules at once by using `import igl = libigl%lib{igl}`. It is likely that it wouldn't be used that much.
 - The generated `pkg-config` files for installation seem weird as preprocess options are missing and too many libraries are stated as link targets. Take a look into it, again.
-
-### Precompiled Static Libraries
-- All precompiled static libraries use the suffix `-compiled` in their name. The suffix `-precompiled` seems not to be fitting as the library itself is provided in its compiled form. Also, it is longer. Using the approach to instead add the suffix `-binless` to header-only libraries, was tempting. But `libigl` mainly advertises itself as header-only library with the additional option to be used in compiled form. So, it was more consistent the other way around.
 
 ### `core` Module
 - For MSVC on Windows and for some source files, we need the `/bigobj` compile option. Currently, we apply it to all source files. This is probably overkill. Instead, we should figure out which of the source files need this option and adjust it in the precompiled static build and also the overall tests and tutorials.
