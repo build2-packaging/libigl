@@ -1,6 +1,6 @@
 # Decide whether library should be precompiled.
 #
-config [bool] config.libigl_core.precompiled ?= false
+config [bool] config.libigl_core.precompiled ?= true
 
 cxx.std = latest
 
