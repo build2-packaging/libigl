@@ -53,14 +53,16 @@ Furthermore, every library supports immediate importation to access its metadata
 ## Configuration
 ### Precompilation
 
-    config [bool] config.libigl_core.precompiled ?= false
+    config [bool] config.libigl_core.precompiled ?= true
     config [bool] config.libigl_opengl.precompiled
     config [bool] config.libigl_glfw.precompiled
     config [bool] config.libigl_imgui.precompiled
     config [bool] config.libigl_png.precompiled
 
 `libigl` supports header-only and precompiled modes.
-The default is to use the header-only library.
+The default is to use the precompiled libraries as the header-only mode is only useful for small test projects and can get quite intensive for CPU and memory when compiling.
+As of that, header-only mode should not be used for standard projects but only for small test builds.
+
 Either all modules need to be used in header-only mode or all modules need to be precompiled.
 Only `config.libigl_core.precompiled` from the `libigl-core` package decides this.
 All other configuration variables are `undefined` on purpose.
@@ -68,7 +70,7 @@ As soon as specifying their value, the value will be traversed to dependent modu
 With this approach only for one package the value needs to be specified.
 If there are two specified inequal values, the negotiation will fail.
 
-Header-only mode should not be used for standard projects but only for small test builds.
+You should not state or require the precompilation or header-only mode in the `manifest` of your package as it is an implementation detail that every configuration should decide for itself.
 
 ## Issues and Notes
 - Previous definite versions of libigl, fail to compile for strange reasons. So, the up-to-date main branch is used as an upstream reference, for now. To get around problems concerning versioning, we use alpha releases. `libigl` does not use alpha or beta releases. Esspecially, not for the upcoming version `2.5.0`. So, it seems to be a valid solution to use alpha versions for snapshots in this build2 packaging attempt.
