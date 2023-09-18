@@ -1,0 +1,9 @@
+: 1
+name: libigl-core-tests
+version: 2.5.0-a.1+1
+type: exe
+language: c++
+project: libigl
+summary: Tests for libigl's Core Module
+license: MPL-2.0
+license: GPL-3.0-or-later
