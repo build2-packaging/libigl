@@ -66,8 +66,8 @@ As of that, header-only mode should not be used for standard projects but only f
 Either all modules need to be used in header-only mode or all modules need to be precompiled.
 Only `config.libigl_core.precompiled` from the `libigl-core` package decides this.
 All other configuration variables are `undefined` on purpose.
-As soon as specifying their value, the value will be traversed to dependent modules by dependency configuration negotiation.
-With this approach only for one package the value needs to be specified.
+As soon as specifying their value, it will be traversed to dependent modules by dependency configuration negotiation.
+With this approach, the mode needs to be specified only for one single module package.
 If there are two specified inequal values, the negotiation will fail.
 
 You should not state or require the precompilation or header-only mode in the `manifest` of your package as it is an implementation detail that every configuration should decide for itself.
