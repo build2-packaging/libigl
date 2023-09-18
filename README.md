@@ -62,6 +62,8 @@ Furthermore, every library supports immediate importation to access its metadata
 `libigl` supports header-only and precompiled modes.
 The default is to use the precompiled libraries as the header-only mode is only useful for small test projects and can get quite intensive for CPU and memory when compiling.
 As of that, header-only mode should not be used for standard projects but only for small test builds.
+This is in contrast to the official upstream default that advertises `libigl` as header-only library.
+<!-- However, header-only libraries pose some difficulties when included multiple times by dependencies for build2 that automatically handles compilation, dependencies, and configuration. -->
 
 Either all modules need to be used in header-only mode or all modules need to be precompiled.
 Only `config.libigl_core.precompiled` from the `libigl-core` package decides this.
@@ -73,7 +75,7 @@ If there are two specified inequal values, the negotiation will fail.
 You should not state or require the precompilation or header-only mode in the `manifest` of your package as it is an implementation detail that every configuration should decide for itself.
 
 ## Issues and Notes
-- Previous definite versions of libigl, fail to compile for strange reasons. So, the up-to-date main branch is used as an upstream reference, for now. To get around problems concerning versioning, we use alpha releases. `libigl` does not use alpha or beta releases. Esspecially, not for the upcoming version `2.5.0`. So, it seems to be a valid solution to use alpha versions for snapshots in this build2 packaging attempt.
+- Previous definite versions of libigl, fail to compile for strange reasons. So, the up-to-date main branch is used as an upstream reference, for now. To get around problems concerning versioning, we use alpha releases. The upstream GitHub project of `libigl` itself does not use alpha or beta releases. Especially, not for the upcoming version `2.5.0`. So, it seems to be a valid solution to use alpha versions for snapshots in this build2 packaging attempt.
 
 ### Unsupported Modules
 - Currently unsupported `libigl` modules:
@@ -91,6 +93,11 @@ You should not state or require the precompilation or header-only mode in the `m
 - The generated `pkg-config` files for installation seem weird as preprocess options are missing and too many libraries are stated as link targets. Take a look into it, again.
 
 ### `core` Module
+- Supported Target Configurations:
+    + On Windows, only MSVC seems to be able to compile the library. For this case, the tests are successful.
+    + On Linux, GCC and Clang can be used. Emscripten is able to compile the library but the file-based tests fail.
+    + On MacOS, GCC and Clang can be used.
+    + On FreeBSD, the library can be compiled but its tests do fail.
 - For MSVC on Windows and for some source files, we need the `/bigobj` compile option. Currently, we apply it to all source files. This is probably overkill. Instead, we should figure out which of the source files need this option and adjust it in the precompiled static build and also the overall tests and tutorials.
 
 - Build Times and Memory Usage: Intel `i7-7700K` with `8` jobs, `16 GiB` memory, Arch Linux with GCC `13.2.1` and the use of `-O3 -march=native`:
