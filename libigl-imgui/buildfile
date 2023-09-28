@@ -9,7 +9,7 @@
 # by reading the metadata from the libigl module dependency.
 #
 import! [metadata, rule_hint=cxx.link] igl = libigl-glfw%liba{igl-glfw}
-precompiled = [bool] $($igl: libigl_glfw.precompiled)
+header_only = [bool] $($igl: libigl_glfw.header_only)
 #
 libs = $igl
 import libs += libimgui-platform-glfw%lib{imgui-platform-glfw}
@@ -25,8 +25,8 @@ liba{igl-imgui}: igl/opengl/glfw/imgui/hxx{*} backends/hxx{*} hxx{*}
 src_files = igl/opengl/glfw/imgui/{*.cpp}
 ./: file{$src_files}
 #
-liba{igl-imgui}: cxx{$src_files}: include = $precompiled
-liba{igl-imgui}: ixx{$src_files}: include = (!$precompiled)
+liba{igl-imgui}: cxx{$src_files}: include = (!$header_only)
+liba{igl-imgui}: ixx{$src_files}: include = $header_only
 
 # Dependencies
 #
@@ -52,7 +52,7 @@ else
 liba{igl-imgui}:
 {
   export.metadata = 1 libigl_imgui
-  libigl_imgui.precompiled = [bool] $precompiled
+  libigl_imgui.header_only = [bool] $header_only
 }
 
 # Mark header and inclusion files as to be installed.

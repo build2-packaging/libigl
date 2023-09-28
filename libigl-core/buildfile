@@ -1,7 +1,8 @@
+
 # Default Targets and Package Files
 #
 # Even in header-only builds, only the static library target is provided.
-# Otherwise, we would need to disable the shared build in precompiled mode.
+# Otherwise, we would need to disable the shared build in compiled mode.
 #
 ./: liba{igl-core} manifest legal{LICENSE*} doc{*.md}
 ./: tests/: install = false
@@ -19,13 +20,17 @@ if ($cxx.target.system != 'win32-msvc')
   cxx.libs += -pthread
 }
 
+# Config
+#
+compiled = [bool] (!$config.libigl_core.header_only)
+
 # Headers
 #
 liba{igl-core}: igl/hxx{* *.hpp}
 
 # Sources
 #
-# Libigl can either be used as header-only or as precompiled static library.
+# Libigl can either be used as header-only or as compiled static library.
 # To make this possible, all its implementation files are marked
 # as header inclusion files for the header-only build and
 # as standard C++ source files for the static build.
@@ -59,15 +64,15 @@ src_files = igl/{*.cpp *.c}
 # by using the 'include' prerequisite-specific variable.
 # See: https://github.com/build2/HOWTO/blob/master/entries/keep-build-graph-config-independent.md
 #
-liba{igl-core}: cxx{$src_files}: include = $config.libigl_core.precompiled
-liba{igl-core}: ixx{$src_files}: include = (!$config.libigl_core.precompiled)
+liba{igl-core}: cxx{$src_files}: include = $compiled
+liba{igl-core}: ixx{$src_files}: include = (!$compiled)
 
 # Build and Export Options
 #
 liba{igl-core}: cxx.export.poptions = "-I$src_root"
 cxx.poptions =+ "-I$src_root"
 #
-if ($config.libigl_core.precompiled)
+if ($compiled)
 {
   liba{igl-core}: cxx.export.poptions += -DIGL_STATIC_LIBRARY
   cxx.poptions += -DIGL_STATIC_LIBRARY
@@ -96,7 +101,7 @@ else
 liba{igl-core}:
 {
   export.metadata = 1 libigl_core
-  libigl_core.precompiled = [bool] $config.libigl_core.precompiled
+  libigl_core.header_only = [bool] $config.libigl_core.header_only
 }
 
 # Mark header and inclusion files as to be installed.

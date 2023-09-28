@@ -30,12 +30,12 @@ libigl-opengl == $
   #
   prefer
   {
-    if ($config.origin(config.libigl_glfw.precompiled) != 'undefined')
-      config.libigl_opengl.precompiled = $config.libigl_glfw.precompiled
+    if ($config.origin(config.libigl_glfw.header_only) != 'undefined')
+      config.libigl_opengl.header_only = $config.libigl_glfw.header_only
   }
 
-  accept (($config.origin(config.libigl_glfw.precompiled) == 'undefined') \
-          || ($config.libigl_opengl.precompiled == $config.libigl_glfw.precompiled))
+  accept (($config.origin(config.libigl_glfw.header_only) == 'undefined') \
+          || ($config.libigl_opengl.header_only == $config.libigl_glfw.header_only))
 }
 \
 

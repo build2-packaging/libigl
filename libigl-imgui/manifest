@@ -30,12 +30,12 @@ libigl-glfw == $
   #
   prefer
   {
-    if ($config.origin(config.libigl_imgui.precompiled) != 'undefined')
-      config.libigl_glfw.precompiled = $config.libigl_imgui.precompiled
+    if ($config.origin(config.libigl_imgui.header_only) != 'undefined')
+      config.libigl_glfw.header_only = $config.libigl_imgui.header_only
   }
 
-  accept (($config.origin(config.libigl_imgui.precompiled) == 'undefined') \
-          || ($config.libigl_glfw.precompiled == $config.libigl_imgui.precompiled))
+  accept (($config.origin(config.libigl_imgui.header_only) == 'undefined') \
+          || ($config.libigl_glfw.header_only == $config.libigl_imgui.header_only))
 }
 \
 

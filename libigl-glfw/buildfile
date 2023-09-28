@@ -9,7 +9,7 @@
 # by reading the metadata from the libigl module dependency.
 #
 import! [metadata, rule_hint=cxx.link] igl = libigl-opengl%liba{igl-opengl}
-precompiled = [bool] $($igl: libigl_opengl.precompiled)
+header_only = [bool] $($igl: libigl_opengl.header_only)
 #
 libs = $igl
 import libs += glfw%lib{glfw}
@@ -24,8 +24,8 @@ liba{igl-glfw}: igl/opengl/glfw/hxx{* *.hpp}
 src_files = igl/opengl/glfw/{*.cpp *.c}
 ./: file{$src_files}
 #
-liba{igl-glfw}: cxx{$src_files}: include = $precompiled
-liba{igl-glfw}: ixx{$src_files}: include = (!$precompiled)
+liba{igl-glfw}: cxx{$src_files}: include = (!$header_only)
+liba{igl-glfw}: ixx{$src_files}: include = $header_only
 
 # Dependencies
 #
@@ -51,7 +51,7 @@ else
 liba{igl-glfw}:
 {
   export.metadata = 1 libigl_glfw
-  libigl_glfw.precompiled = [bool] $precompiled
+  libigl_glfw.header_only = [bool] $header_only
 }
 
 # Mark header and inclusion files as to be installed.

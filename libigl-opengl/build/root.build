@@ -1,4 +1,4 @@
-# Decide, whether the library should be precompiled.
+# Decide, whether the library should be compiled.
 # This value is 'undefined' on purpose
 # as the compilation mode will be decided
 # by the metadata of libigl module dependencies.
@@ -6,7 +6,7 @@
 # that through this approach
 # will be traversed to all consumers and dependencies.
 #
-config [bool] config.libigl_opengl.precompiled
+config [bool] config.libigl_opengl.header_only
 
 cxx.std = latest
 

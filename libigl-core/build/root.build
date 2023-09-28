@@ -1,6 +1,6 @@
-# Decide whether library should be precompiled.
+# Decide whether library should be in header-only mode.
 #
-config [bool] config.libigl_core.precompiled ?= true
+config [bool] config.libigl_core.header_only ?= false
 
 cxx.std = latest
 

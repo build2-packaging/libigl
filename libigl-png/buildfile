@@ -9,7 +9,7 @@
 # by reading the metadata from the libigl module dependency.
 #
 import! [metadata, rule_hint=cxx.link] igl = libigl-opengl%liba{igl-opengl}
-precompiled = [bool] $($igl: libigl_opengl.precompiled)
+header_only = [bool] $($igl: libigl_opengl.header_only)
 #
 libs = $igl
 import libs += stb_image%lib{stb_image}
@@ -27,8 +27,8 @@ src_files = igl/png/{*.cpp}
 cxx{stb_image}@./: dist = true
 #
 liba{igl-png}: cxx{*}
-liba{igl-png}: cxx{$src_files}: include = $precompiled
-liba{igl-png}: ixx{$src_files}: include = (!$precompiled)
+liba{igl-png}: cxx{$src_files}: include = (!$header_only)
+liba{igl-png}: ixx{$src_files}: include = $header_only
 
 # Dependencies
 #
@@ -54,7 +54,7 @@ else
 liba{igl-png}:
 {
   export.metadata = 1 libigl_png
-  libigl_png.precompiled = [bool] $precompiled
+  libigl_png.header_only = [bool] $header_only
 }
 
 # Mark header and inclusion files as to be installed.

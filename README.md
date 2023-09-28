@@ -1,6 +1,6 @@
 # build2 Packages for libigl Modules
 
-[`libigl`](https://github.com/libigl/libigl) is a simple C++ geometry processing library separated into multiple modules that can be used either as header-only or as precompiled version. 
+[`libigl`](https://github.com/libigl/libigl) is a simple C++ geometry processing library separated into multiple modules that can be used either as header-only or as compiled version. 
 
 [![Official](https://img.shields.io/website/https/github.com/libigl/libigl.svg?down_message=offline&label=Official&style=for-the-badge&up_color=blue&up_message=online)](https://github.com/libigl/libigl)
 [![build2](https://img.shields.io/website/https/github.com/build2-packaging/libigl.svg?down_message=offline&label=build2&style=for-the-badge&up_color=blue&up_message=online)](https://github.com/build2-packaging/libigl)
@@ -45,34 +45,34 @@ These can be imported by the following declarations in a `buildfile`.
     import igl = libigl-imgui%liba{igl-imgui}
     import igl = libigl-png%liba{igl-png}
 
-Furthermore, every library supports immediate importation to access its metadata for querying whether it has been precompiled.
+Furthermore, every library supports immediate importation to access its metadata for querying whether it has been compiled.
 
     import! [metadata, rule_hint=cxx.link] igl = libigl-core%liba{igl-core}
-    precompiled = [bool] $($igl: libigl_core.precompiled)
+    header_only = [bool] $($igl: libigl_core.header_only)
 
 ## Configuration
-### Precompilation
+### Header-Only Mode
 
-    config [bool] config.libigl_core.precompiled ?= true
-    config [bool] config.libigl_opengl.precompiled
-    config [bool] config.libigl_glfw.precompiled
-    config [bool] config.libigl_imgui.precompiled
-    config [bool] config.libigl_png.precompiled
+    config [bool] config.libigl_core.header_only ?= false
+    config [bool] config.libigl_opengl.header_only
+    config [bool] config.libigl_glfw.header_only
+    config [bool] config.libigl_imgui.header_only
+    config [bool] config.libigl_png.header_only
 
-`libigl` supports header-only and precompiled modes.
-The default is to use the precompiled libraries as the header-only mode is only useful for small test projects and can get quite intensive for CPU and memory when compiling.
+`libigl` supports header-only and compiled modes.
+The default is to use the compiled libraries as the header-only mode is only useful for small test projects and can get quite intensive for CPU and memory when compiling.
 As of that, header-only mode should not be used for standard projects but only for small test builds.
 This is in contrast to the official upstream default that advertises `libigl` as header-only library.
 <!-- However, header-only libraries pose some difficulties when included multiple times by dependencies for build2 that automatically handles compilation, dependencies, and configuration. -->
 
-Either all modules need to be used in header-only mode or all modules need to be precompiled.
-Only `config.libigl_core.precompiled` from the `libigl-core` package decides this.
+Either all modules need to be used in header-only mode or all modules need to be compiled.
+Only `config.libigl_core.header_only` from the `libigl-core` package decides this.
 All other configuration variables are `undefined` on purpose.
 As soon as specifying their value, it will be traversed to dependent modules by dependency configuration negotiation.
 With this approach, the mode needs to be specified only for one single module package.
 If there are two specified inequal values, the negotiation will fail.
 
-You should not state or require the precompilation or header-only mode in the `manifest` of your package as it is an implementation detail that every configuration should decide for itself.
+You should not state or require the compilation or header-only mode in the `manifest` of your package as it is an implementation detail that every configuration should decide for itself.
 
 ## Issues and Notes
 - Previous definite versions of libigl, fail to compile for strange reasons. So, the up-to-date main branch is used as an upstream reference, for now. To get around problems concerning versioning, we use alpha releases. The upstream GitHub project of `libigl` itself does not use alpha or beta releases. Especially, not for the upcoming version `2.5.0`. So, it seems to be a valid solution to use alpha versions for snapshots in this build2 packaging attempt.
@@ -98,14 +98,14 @@ You should not state or require the precompilation or header-only mode in the `m
     + On Linux, GCC and Clang can be used. Emscripten is able to compile the library but the file-based tests fail.
     + On MacOS, GCC and Clang can be used.
     + On FreeBSD, the library can be compiled but its tests do fail.
-- For MSVC on Windows and for some source files, we need the `/bigobj` compile option. Currently, we apply it to all source files. This is probably overkill. Instead, we should figure out which of the source files need this option and adjust it in the precompiled static build and also the overall tests and tutorials.
+- For MSVC on Windows and for some source files, we need the `/bigobj` compile option. Currently, we apply it to all source files. This is probably overkill. Instead, we should figure out which of the source files need this option and adjust it in the compiled static build and also the overall tests and tutorials.
 
 - Build Times and Memory Usage: Intel `i7-7700K` with `8` jobs, `16 GiB` memory, Arch Linux with GCC `13.2.1` and the use of `-O3 -march=native`:
     + Header-Only Mode:
         * Building the Tests:
             - `~7.0 GiB`
             - `~3 min 50 s`
-    + Precompiled Mode:
+    + compiled Mode:
         * Building the Library:
             - `~5 GiB`
             - `~5 min 40 s`
@@ -117,7 +117,7 @@ You should not state or require the precompilation or header-only mode in the `m
         * Building the Tests:
             - `~20 GiB`
             - `~50 s`
-    + Precompiled Mode:
+    + compiled Mode:
         * Building the Library:
             - `~13 GiB`
             - `~1 min 5 s`
@@ -130,7 +130,7 @@ You should not state or require the precompilation or header-only mode in the `m
 - `libigl-glad` should not be installed. It needs the KHR platform header. There should be a configuration to disable its use.
 
 ### `imgui` Module
-- This module seems to be broken as even tutorials in header-only mode depending on it do not to work properly. In its precompiled version, it is not usable at all.
+- This module seems to be broken as even tutorials in header-only mode depending on it do not to work properly. In its compiled version, it is not usable at all.
 - Currently, ImGuizmo is not supported in the `libigl-imgui` package.
 - Dear ImGui for `libigl-imgui` is compiled without `IMGUI_IMPL_OPENGL_LOADER_GLAD` and `IMGUI_DISABLE_OBSOLETE_FUNCTIONS` in contrast to the upstream build system. It does not seem to make a difference. See: `/upstream/libigl/cmake/recipes/external/imgui.cmake`
 - `libigl-imgui` is not installable. The original module uses strange include paths for ImGui backends and its fonts. These paths are currently fixed by wrapper headers in the root of the package. But these headers should not be installed as they would pollute the global include folder.
@@ -143,14 +143,14 @@ You should not state or require the precompilation or header-only mode in the `m
 - Build Times and Memory Usage: Intel `i9-13900K` with `32` jobs, `32 GiB` memory, Arch Linux with GCC `13.2.1`, and the use of `-O3 -march=native`:
     + Header-Only Mode:
         * Not buildable as memory is insufficient for job count.
-    + Precompiled:
+    + compiled:
         * `~8 GiB`
         * `~20 s`
 - Build Times and Memory Usage: Intel `i9-13900K` with `8` jobs, `32 GiB` memory, Arch Linux with GCC `13.2.1`, and the use of `-O3 -march=native`:
     + Header-Only Mode:
         * `~16 GiB`
         * `~2 min 50 s`
-    + Precompiled:
+    + compiled:
         * `~3 GiB`
         * `~20 s`
 
