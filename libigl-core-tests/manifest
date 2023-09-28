@@ -1,6 +1,6 @@
 : 1
 name: libigl-core-tests
-version: 2.5.0-a.1+1
+version: 2.5.0-a.1+2
 project: libigl
 type: exe
 language: c++
