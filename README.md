@@ -60,6 +60,8 @@ Furthermore, every library supports immediate importation to access its metadata
     config [bool] config.libigl_png.header_only
 
 `libigl` supports header-only and compiled modes.
+For an explanation on why we support both modes, see [this issue](https://github.com/build2-packaging/libigl/issues/4).
+
 The default is to use the compiled libraries as the header-only mode is only useful for small test projects and can get quite intensive for CPU and memory when compiling.
 As of that, header-only mode should not be used for standard projects but only for small test builds.
 This is in contrast to the official upstream default that advertises `libigl` as header-only library.
