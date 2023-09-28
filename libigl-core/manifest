@@ -36,4 +36,4 @@ Eigen ^3.4.0
 
 tests: libigl-core-tests == $
 
-header-only-build-config: config.libigl_core.Header_only=true
+header-only-build-config: config.libigl_core.header_only=true
