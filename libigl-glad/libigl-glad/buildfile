@@ -1,0 +1,8 @@
+lib{igl-glad}: {h c}{**}
+{
+  c.export.poptions = "-I$src_base"
+}
+
+c.poptions =+ "-I$src_base"
+
+h{*}: install.subdirs = true

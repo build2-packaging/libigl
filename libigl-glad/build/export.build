@@ -1,6 +1,6 @@
 $out_root/
 {
-  include ./
+  include libigl-glad/
 }
 
-export $out_root/$import.target
+export $out_root/libigl-glad/$import.target

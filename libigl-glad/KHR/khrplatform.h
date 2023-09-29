@@ -1,1 +1,0 @@
-../../upstream/libigl-glad/include/KHR/khrplatform.h

@@ -1,6 +1,6 @@
 $out_root/
 {
-  include ./
+  include libigl-imgui/
 }
 
-export $out_root/$import.target
+export $out_root/libigl-imgui/$import.target

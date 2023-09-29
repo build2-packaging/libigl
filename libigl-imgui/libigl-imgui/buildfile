@@ -1,0 +1,60 @@
+# Default Targets
+#
+./: liba{igl-imgui}
+
+# Imports
+#
+# Make sure the build is consistently setting precompilation
+# by reading the metadata from the libigl module dependency.
+#
+import! [metadata, rule_hint=cxx.link] igl = libigl-glfw%liba{igl-glfw}
+header_only = [bool] $($igl: libigl_glfw.header_only)
+#
+libs = $igl
+import libs += libimgui-platform-glfw%lib{imgui-platform-glfw}
+import libs += libimgui-render-opengl3%lib{imgui-render-opengl3}
+
+# Headers
+#
+liba{igl-imgui}: igl/opengl/glfw/imgui/hxx{*} backends/hxx{*} hxx{*}
+
+# Sources
+#
+{ixx cxx}{*}: dist = false
+src_files = igl/opengl/glfw/imgui/{*.cpp}
+./: file{$src_files}
+#
+liba{igl-imgui}: cxx{$src_files}: include = (!$header_only)
+liba{igl-imgui}: ixx{$src_files}: include = $header_only
+
+# Dependencies
+#
+liba{igl-imgui}: $libs
+liba{igl-imgui}: cxx.export.libs = $libs
+
+# Build and Export Options
+#
+liba{igl-imgui}: cxx.export.poptions = "-I$src_base"
+cxx.poptions =+ "-I$src_base"
+
+# For pre-releases use the complete version to make sure they cannot be used
+# in place of another pre-release or the final version. See the version module
+# for details on the version.* variable values.
+#
+if $version.pre_release
+  liba{igl-imgui}: bin.lib.version = "-$version.project_id"
+else
+  liba{igl-imgui}: bin.lib.version = "-$version.major.$version.minor"
+
+# Library Metadata
+#
+liba{igl-imgui}:
+{
+  export.metadata = 1 libigl_imgui
+  libigl_imgui.header_only = [bool] $header_only
+}
+
+# Mark header and inclusion files as to be installed.
+# Inclusion files are only installed when no precompilation is used.
+#
+{hxx ixx}{*}: install = include/igl/opengl/glfw/imgui/

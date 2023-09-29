@@ -1,11 +1,2 @@
-./: lib{igl-glad}: KHR/h{*} glad/{h c}{gl}
-{
-  c.export.poptions = "-I$src_root"
-}
-
-c.poptions =+ "-I$src_root"
-
-h{*}: install.subdirs = true
-
-./: manifest legal{LICENSE*} doc{*.md}
-./: tests/: install = false
+./: {*/ -build/} manifest legal{LICENSE*} doc{*.md}
+tests/: install = false

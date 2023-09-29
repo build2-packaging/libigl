@@ -1,6 +1,6 @@
 $out_root/
 {
-  include ./
+  include libigl-png/
 }
 
-export $out_root/$import.target
+export $out_root/libigl-png/$import.target

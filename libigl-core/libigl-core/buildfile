@@ -1,0 +1,108 @@
+# Default Targets
+#
+# Even in header-only builds, only the static library target is provided.
+# Otherwise, we would need to disable the shared build in compiled mode.
+#
+./: liba{igl-core}
+
+# Dependencies
+#
+import libs = Eigen%lib{Eigen}
+#
+liba{igl-core}: $libs
+liba{igl-core}: cxx.export.libs = $libs
+#
+if ($cxx.target.system != 'win32-msvc')
+{
+  liba{igl-core}: cxx.export.libs += -pthread
+  cxx.libs += -pthread
+}
+
+# Config
+#
+compiled = [bool] (!$config.libigl_core.header_only)
+
+# Headers
+#
+liba{igl-core}: igl/hxx{* *.hpp}
+
+# Sources
+#
+# Libigl can either be used as header-only or as compiled static library.
+# To make this possible, all its implementation files are marked
+# as header inclusion files for the header-only build and
+# as standard C++ source files for the static build.
+# As the configuration decides which build to use,
+# the implementation files are never marked with two file types at the same time.
+# However, the `dist` operation must act independently of the actual configuration
+# and provide all possibly needed files in a package distribution.
+# Naively marking the same implementation files as inclusion and source files
+# leads even for different targets to the build2 warning
+# that files are distributed multiple times with a note
+# that this will become an error in the future.
+# On the other hand, putting the target declarations into different branches
+# introduces a warning about conditional dependency declarations.
+# In this case, the warning could be safely ignored, though.
+# Still, it is a warning that we should get rid of.
+#
+# Instead, disable the distribution of header inclusion and source files.
+# This gets rid of the warning that a file might be distributed multiple times.
+#
+{ixx cxx}{*}: dist = false
+#
+# Use wildcard patterns to get a list of all implementation files
+# and add those files to the distribution by using the 'file{}' type.
+# So, all implementation files are distributed only once
+# but with unknown further type specification.
+#
+src_files = igl/{*.cpp *.c}
+./: file{$src_files}
+#
+# Keep the build graph configuration-independent
+# by using the 'include' prerequisite-specific variable.
+# See: https://github.com/build2/HOWTO/blob/master/entries/keep-build-graph-config-independent.md
+#
+liba{igl-core}: cxx{$src_files}: include = $compiled
+liba{igl-core}: ixx{$src_files}: include = (!$compiled)
+
+# Build and Export Options
+#
+liba{igl-core}: cxx.export.poptions = "-I$src_base"
+cxx.poptions =+ "-I$src_base"
+#
+if ($compiled)
+{
+  liba{igl-core}: cxx.export.poptions += -DIGL_STATIC_LIBRARY
+  cxx.poptions += -DIGL_STATIC_LIBRARY
+}
+#
+if ($cxx.target.class == 'windows')
+{
+  liba{igl-core}: cxx.export.poptions += -DWIN32 -DNOMINMAX
+  cxx.poptions += -DWIN32 -DNOMINMAX
+}
+#
+if ($cxx.id == 'msvc')
+  cxx.coptions += /bigobj
+
+# For pre-releases use the complete version to make sure they cannot be used
+# in place of another pre-release or the final version. See the version module
+# for details on the version.* variable values.
+#
+if $version.pre_release
+  liba{igl-core}: bin.lib.version = "-$version.project_id"
+else
+  liba{igl-core}: bin.lib.version = "-$version.major.$version.minor"
+
+# Library Metadata
+#
+liba{igl-core}:
+{
+  export.metadata = 1 libigl_core
+  libigl_core.header_only = [bool] $config.libigl_core.header_only
+}
+
+# Mark header and inclusion files as to be installed.
+# Inclusion files are only installed when no precompilation is used.
+#
+{hxx ixx}{*}: install = include/igl/
