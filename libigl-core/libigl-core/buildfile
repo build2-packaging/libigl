@@ -103,6 +103,6 @@ liba{igl-core}:
 }
 
 # Mark header and inclusion files as to be installed.
-# Inclusion files are only installed when no precompilation is used.
+# Inclusion files are only installed when header-only mode is used.
 #
 {hxx ixx}{*}: install = include/igl/

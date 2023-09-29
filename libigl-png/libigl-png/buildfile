@@ -4,7 +4,7 @@
 
 # Imports
 #
-# Make sure the build is consistently setting precompilation
+# Make sure the build uses a consistent configuration
 # by reading the metadata from the libigl module dependency.
 #
 import! [metadata, rule_hint=cxx.link] igl = libigl-opengl%liba{igl-opengl}
@@ -57,6 +57,6 @@ liba{igl-png}:
 }
 
 # Mark header and inclusion files as to be installed.
-# Inclusion files are only installed when no precompilation is used.
+# Inclusion files are only installed when header-only mode is used.
 #
 {hxx ixx}{*}: install = include/igl/png/

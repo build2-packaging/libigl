@@ -25,8 +25,8 @@ depends:
 \
 libigl-glfw == $
 {
-  # If the precompilation of this package has been configured,
-  # the dependency is required to use the same compilation mode.
+  # If the compilation mode of this package has been configured,
+  # its dependency is required to use the same.
   #
   prefer
   {
