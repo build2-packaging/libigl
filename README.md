@@ -97,7 +97,8 @@ You should not state or require the compilation or header-only mode in the `mani
 ### `core` Module
 - Supported Target Configurations:
     + On Windows, only MSVC seems to be able to compile the library. For this case, the tests are successful.
-    + On Linux, GCC and Clang can be used. Emscripten is able to compile the library but the file-based tests fail.
+    + On Linux, GCC and Clang can be used. As of using Eigen, Clang 16 can only be used with `libc++`.
+    + Emscripten is not supported.
     + On MacOS, GCC and Clang can be used.
     + On FreeBSD, the library can be compiled but its tests do fail.
 - For MSVC on Windows and for some source files, we need the `/bigobj` compile option. Currently, we apply it to all source files. This is probably overkill. Instead, we should figure out which of the source files need this option and adjust it in the compiled static build and also the overall tests and tutorials.
